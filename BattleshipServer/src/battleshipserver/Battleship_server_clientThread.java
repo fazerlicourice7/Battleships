@@ -38,7 +38,7 @@ public class Battleship_server_clientThread implements Runnable {
     int A = 0, B = 1, C = 2, D = 3, E = 4, F = 5, G = 6, H = 7, I = 8, J = 9;
     //hold the values of the locations of the battleships of the two players(in the format LetterNumber. eg A3, G7, J9 etc.
     String xy1[], xy2[];
-    //used to hold the values of the x and y axes of te users input while targeting the opponents battleships
+    //used to hold the values of the x and y axes of the users input while targeting the opponents battleships
     int x, y;
     //counts the number of attempts the user made at the opponent's battleships
     int TRIES1, TRIES2;
@@ -82,15 +82,29 @@ public class Battleship_server_clientThread implements Runnable {
                 //writes the two 10x10 grids to the client
                 out.writeObject(coordinates2);
                 out.writeObject(coordinates1);
+                out.flush();
                 synchronized (this) {
                     //reads the location of all of the player's battleships, makes them available to the corresponding thread and stores them
                     xy1 = (String[]) in.readObject();
+                }
+                //sets this thread's status to ready
+                synchronized (this) {
+                    READY1 = 1;
+                }
+                //waits for corresponding thread to set its status to ready
+                while (READY2 != 1) {
+
+                }
+                //resets it's status for later use
+                synchronized (this) {
+                    READY1 = 0;
                 }
                 //game loop
                 while (true) {
                     //writes the updated grids once each iteration
                     out.writeObject(coordinates2);
                     out.writeObject(coordinates1);
+                    out.flush();
                     //reads the target location from the client
                     String target = in.readUTF();
                     //increments the counter which keeps track of number of missiles fired
@@ -122,7 +136,7 @@ public class Battleship_server_clientThread implements Runnable {
                         x = J;
                     }
                     //checks if the player's target corresponds with any of the opponents battleship's locations
-                    for (int loop = 1; loop <= xy1.length; loop++) {
+                    for (int loop = 0; loop < xy1.length; loop++) {
                         //if yes then mark that spot with an 'X' to indicate a hit
                         if (target.equals(xy2[loop])) {
                             for (int row = 0; row <= 10; row++) {
@@ -174,22 +188,31 @@ public class Battleship_server_clientThread implements Runnable {
                     //checks if the game is over
                     if (player1 == 17 && player2 == 17) {
                         //in the case of a draw:
+                        out.writeUTF("1");
                         out.writeUTF("GAME OVER!");
-                        out.writeUTF("It was a draw!");
-                        out.writeUTF("Both you and your opponent destroyed each other's battleships in " + TRIES1 + " shots.");
+                        out.writeUTF("It was a draw! Both you and your opponent destroyed each other's battleships in " + TRIES1 + " shots.");
+                        out.flush();
                         break;
                     }
-                    if (player1 == 17) {
+                    else if (player1 == 17) {
                         //in the case of a win:
+                        out.writeUTF("1");
                         out.writeUTF("GAME OVER!");
                         out.writeUTF("You won in " + TRIES1 + " shots.");
+                        out.flush();
                         break;
                     } else if (player2 == 17) {
                         //in the case of a loss:
+                        out.writeUTF("1");
                         out.writeUTF("GAME OVER!");
                         out.writeUTF("You lost in " + TRIES2 + " shots.");
+                        out.flush();
                         break;
+                    } else {
+                        out.writeUTF("0");
+                        out.flush();
                     }
+
                 }
             } catch (IOException | ClassNotFoundException ex) {
                 Logger.getLogger(Battleship_server_clientThread.class.getName()).log(Level.SEVERE, null, ex);
@@ -216,6 +239,18 @@ public class Battleship_server_clientThread implements Runnable {
                 synchronized (this) {
                     //reads the location of all of the player's battleships, makes them available to the corresponding thread and stores them
                     xy2 = (String[]) in.readObject();
+                }
+                //sets this thread's status to ready
+                synchronized (this) {
+                    READY2 = 1;
+                }
+                //waits for the other thread to change its status to ready
+                while (READY1 != 1) {
+
+                }
+                //resets it's status for later use
+                synchronized (this) {
+                    READY2 = 0;
                 }
                 //game loop
                 while (true) {
@@ -306,21 +341,22 @@ public class Battleship_server_clientThread implements Runnable {
                     //checks if game is over
                     if (player1 == 17 && player2 == 17) {
                         //in the case of a draw:
-                        out.writeUTF("GAME OVER!");
-                        out.writeUTF("It was a draw!");
+                        out.writeUTF("1");
                         out.writeUTF("Both you and your opponent destroyed each other's battleships in " + TRIES1 + " shots.");
                         break;
                     }
                     if (player2 == 17) {
                         //in the case of a win:
-                        out.writeUTF("GAME OVER!");
+                        out.writeUTF("1");
                         out.writeUTF("You won in " + TRIES2 + " shots.");
                         break;
                     } else if (player1 == 17) {
                         //in the case of a loss:
-                        out.writeUTF("GAME OVER!");
+                        out.writeUTF("1");
                         out.writeUTF("You lost in " + TRIES1 + " shots.");
                         break;
+                    } else {
+                        out.writeUTF("0");
                     }
                 }
             } catch (IOException | ClassNotFoundException ex) {
