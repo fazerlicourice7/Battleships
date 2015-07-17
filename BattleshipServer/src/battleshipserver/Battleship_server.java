@@ -50,7 +50,7 @@ public class Battleship_server {
     static int PORT = 12345;
     static Socket client;
     static Battleship_serverThread client1;
-    public static synchronized void main(String[] args) throws IOException {
+    public static synchronized void main(String[] args) throws IOException, SecurityException, IllegalArgumentException{
         //creates a loop that re-iterates forever(while the program is running).
         while (true) {
             //creates a ServerSocket that listens for requests on port:PORT
@@ -60,7 +60,7 @@ public class Battleship_server {
                 client = serversocket.accept();
                 client1 = new battleshipserver.Battleship_serverThread(client);
                 client1.start();
-                //System.out.println("Connection established");
+                System.out.println("Connection established");
             }
         }
         

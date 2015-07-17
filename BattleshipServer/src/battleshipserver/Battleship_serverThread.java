@@ -29,8 +29,9 @@ public class Battleship_serverThread extends Thread {
     
     public final Socket client1;
     public Socket client2;
-    public int PORT;
-    private Object Battleship_eDeployment;
+    public int PORT = 54321;
+    //static Battleship_server_clientThread CLIENT2, CLIENT1;
+    //private Object battleshipserver;
 
     Battleship_serverThread(Socket client1) {
         super("Battleship_serverThread");
@@ -39,9 +40,9 @@ public class Battleship_serverThread extends Thread {
 
     //run method
     @Override
-    public synchronized void run() {
+    public synchronized void run()throws SecurityException, IllegalArgumentException{
         try (
-                ServerSocket serversocket = new ServerSocket(PORT)) {
+                ServerSocket serversocket = new ServerSocket(PORT)){
             client2 = serversocket.accept();
             int player = 2;
             Runnable CLIENT2 = new battleshipserver.Battleship_server_clientThread(client2, player);
@@ -50,6 +51,8 @@ public class Battleship_serverThread extends Thread {
         catch (IOException ex) {
             Logger.getLogger(Battleship_serverThread.class.getName()).log(Level.SEVERE, null, ex);
         } 
+        catch(NullPointerException exc){
+        }
         finally {
             int player = 1;
             Runnable CLIENT1;

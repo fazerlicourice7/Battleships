@@ -45,7 +45,7 @@ public class Battleship_server_clientThread implements Runnable {
     //used to check if the corresponding thread is ready to continue or not
     int READY1 = 0, READY2 = 0;
     //hold the grids for both the players- coordinates1 holds player1's battleships- ie. player1 is aiming at coordinates2
-    String[][] coordinates1, coordinates2;
+    String[][] coordinates1 = new String[10][10], coordinates2 = new String[10][10];
     //is the socket connection to the player
     Socket client;
 

@@ -17,8 +17,10 @@
 package battleshipclient;
 
 import java.io.*;
+import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.rmi.ConnectIOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -37,7 +39,7 @@ public class Battleship_client {
     //used to take generic input from the player
     String input;
     //contains the value of the port number to which it should connect
-    public static int PORT;
+    public static int PORT1 = 12345, PORT2 = 54321;
     //used as a constructor for the socket
     public static InetAddress host;
     //defines an object input stream 'in'
@@ -335,12 +337,19 @@ public class Battleship_client {
         letters.add("I");
         letters.add("J");
         //chooses a random IP address from the array list of ip addresses.
-        host = IP.get(random.nextInt((IP.size() - 1)));
+        host = IP.get(random.nextInt(IP.size()));
         //attempts to initialize the socket
-        try (Socket connection = new Socket(host, PORT)) {
-            //initializes the input and output streams
+        try (Socket connection = new Socket(host, PORT2)) {
+            System.out.println("Connected to player 1. Starting game.");
             in = new ObjectInputStream(connection.getInputStream());
             out = new ObjectOutputStream(connection.getOutputStream());
+        } catch (ConnectException ex) {
+            try (Socket connection = new Socket(host, PORT1)) {
+                System.out.println("Connected to server. Waiting for player 2.");
+                //initializes the input and output streams
+                in = new ObjectInputStream(connection.getInputStream());
+                out = new ObjectOutputStream(connection.getOutputStream());
+            }
         }
         //reads the initial grid for both players from the server
         coordinates1 = (String[][]) in.readObject();
@@ -353,7 +362,6 @@ public class Battleship_client {
             }
             System.out.println();
         }
-
         System.out.println("Enter the location of your battleships. THEY CAN BE HORIZONTAL AND VERTICAL ONLY! " + "\n" + "In the format LetterNumber LetterNumber LetterNumber....");
         System.out.println("Example: A9 A8 A7, A1 B1 C1");
         //initializes the String array locations allowing us to append to it later
@@ -445,14 +453,14 @@ public class Battleship_client {
                 break;
             } else if (GameOver.equals("0")) {
             }
-        }
 
+        }
     }
 
     public static void main(String args[]) throws IOException, ClassNotFoundException {
         Battleship_client obj = new Battleship_client();
         //adds ip addresses to the arraylist containing ip addresses
-        InetAddress ip1 = null;
+        InetAddress ip1 = InetAddress.getByName("68.50.78.57");
         IP.add(ip1);
         obj.doStuff();
     }
