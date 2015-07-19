@@ -341,14 +341,14 @@ public class Battleship_client {
         //attempts to initialize the socket
         try (Socket connection = new Socket(host, PORT2)) {
             System.out.println("Connected to player 1. Starting game.");
-            in = new ObjectInputStream(connection.getInputStream());
             out = new ObjectOutputStream(connection.getOutputStream());
+            in = new ObjectInputStream(connection.getInputStream());
         } catch (ConnectException ex) {
             try (Socket connection = new Socket(host, PORT1)) {
                 System.out.println("Connected to server. Waiting for player 2.");
                 //initializes the input and output streams
-                in = new ObjectInputStream(connection.getInputStream());
                 out = new ObjectOutputStream(connection.getOutputStream());
+                in = new ObjectInputStream(connection.getInputStream());
             }
         }
         //reads the initial grid for both players from the server

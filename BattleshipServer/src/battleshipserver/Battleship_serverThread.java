@@ -51,8 +51,6 @@ public class Battleship_serverThread extends Thread {
         catch (IOException ex) {
             Logger.getLogger(Battleship_serverThread.class.getName()).log(Level.SEVERE, null, ex);
         } 
-        catch(NullPointerException exc){
-        }
         finally {
             int player = 1;
             Runnable CLIENT1;
