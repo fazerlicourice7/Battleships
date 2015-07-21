@@ -18,6 +18,7 @@ package battleshipserver;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -193,8 +194,7 @@ public class Battleship_server_clientThread implements Runnable {
                         out.writeUTF("It was a draw! Both you and your opponent destroyed each other's battleships in " + TRIES1 + " shots.");
                         out.flush();
                         break;
-                    }
-                    else if (player1 == 17) {
+                    } else if (player1 == 17) {
                         //in the case of a win:
                         out.writeUTF("1");
                         out.writeUTF("GAME OVER!");
@@ -214,12 +214,15 @@ public class Battleship_server_clientThread implements Runnable {
                     }
 
                 }
-            } catch (IOException | ClassNotFoundException ex) {
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Battleship_server_clientThread.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SocketException exe) {
+                System.err.println(exe);
+            } catch (IOException ex) {
                 Logger.getLogger(Battleship_server_clientThread.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
                 try {
-                    in.close();
-                    out.close();
+                    client.close();
                 } catch (IOException ex) {
                     Logger.getLogger(Battleship_server_clientThread.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -359,12 +362,15 @@ public class Battleship_server_clientThread implements Runnable {
                         out.writeUTF("0");
                     }
                 }
-            } catch (IOException | ClassNotFoundException ex) {
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Battleship_server_clientThread.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SocketException exe) {
+                System.err.println(exe);
+            } catch (IOException ex) {
                 Logger.getLogger(Battleship_server_clientThread.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
                 try {
-                    in.close();
-                    out.close();
+                    client.close();
                 } catch (IOException ex) {
                     Logger.getLogger(Battleship_server_clientThread.class.getName()).log(Level.SEVERE, null, ex);
                 }
