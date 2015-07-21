@@ -565,7 +565,11 @@ public class Battleship_client {
     public static void main(String args[]) throws IOException, ClassNotFoundException {
         Battleship_client obj = new Battleship_client();
         //adds ip addresses to the arraylist containing ip addresses
+<<<<<<< HEAD
         InetAddress ip1 = InetAddress.getByName();
+=======
+        InetAddress ip1 = InetAddress.getByName("");
+>>>>>>> ae06f8bd77949ef5a241925ce58008b4ff36e476
         IP.add(ip1);
         obj.doStuff();
     }
