@@ -30,9 +30,7 @@ public class Battleship_serverThread extends Thread {
     public final Socket client1;
     public Socket client2;
     public int PORT = 54321;
-    //static Battleship_server_clientThread CLIENT2, CLIENT1;
-    //private Object battleshipserver;
-
+    
     Battleship_serverThread(Socket client1) {
         super("Battleship_serverThread");
         this.client1 = client1;

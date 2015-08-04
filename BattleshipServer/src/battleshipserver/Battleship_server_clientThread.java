@@ -38,17 +38,17 @@ public class Battleship_server_clientThread implements Runnable {
     //hold the corresponding values of the x axis on the grid
     int A = 0, B = 1, C = 2, D = 3, E = 4, F = 5, G = 6, H = 7, I = 8, J = 9;
     //hold the values of the locations of the battleships of the two players(in the format LetterNumber. eg A3, G7, J9 etc.
-    String xy1[], xy2[];
+    volatile String xy1[], xy2[];
     //used to hold the values of the x and y axes of the users input while targeting the opponents battleships
     int x, y;
     //counts the number of attempts the user made at the opponent's battleships
-    int TRIES1, TRIES2;
-    //used to check if the corresponding thread is ready to continue or not
-    int READY1 = 0, READY2 = 0;
+    private volatile int TRIES1, TRIES2;
     //hold the grids for both the players- coordinates1 holds player1's battleships- ie. player1 is aiming at coordinates2
-    String[][] coordinates1 = new String[10][10], coordinates2 = new String[10][10];
+    private volatile String[][] coordinates1 = new String[10][10], coordinates2 = new String[10][10];
     //is the socket connection to the player
     Socket client;
+    //object that is used as the intrisic lock for the synchronized statements
+    private final Object lock = new Object();
 
     Battleship_server_clientThread(Socket client, int player) {
         //super("Battleship_server_clientThread");
@@ -89,16 +89,14 @@ public class Battleship_server_clientThread implements Runnable {
                     xy1 = (String[]) in.readObject();
                 }
                 //sets this thread's status to ready
-                synchronized (this) {
-                    READY1 = 1;
-                }
-                //waits for corresponding thread to set its status to ready
-                while (READY2 != 1) {
-
-                }
-                //resets it's status for later use
-                synchronized (this) {
-                    READY1 = 0;
+                synchronized (lock) {
+                    notify();
+                    try {
+                        wait();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Battleship_server_clientThread.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    notify();
                 }
                 //game loop
                 while (true) {
@@ -179,12 +177,14 @@ public class Battleship_server_clientThread implements Runnable {
                         }
                     }
                     //sets this thread's status to ready
-                    synchronized (this) {
-                        READY1 = 1;
-                    }
-                    //checks if the other thread is ready, waits until it is ready
-                    while (READY2 != 1) {
-
+                    synchronized (lock) {
+                        notify();
+                        try {
+                            wait();
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(Battleship_server_clientThread.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        notify();
                     }
                     //checks if the game is over
                     if (player1 == 17 && player2 == 17) {
@@ -244,16 +244,14 @@ public class Battleship_server_clientThread implements Runnable {
                     xy2 = (String[]) in.readObject();
                 }
                 //sets this thread's status to ready
-                synchronized (this) {
-                    READY2 = 1;
-                }
-                //waits for the other thread to change its status to ready
-                while (READY1 != 1) {
-
-                }
-                //resets it's status for later use
-                synchronized (this) {
-                    READY2 = 0;
+                synchronized (lock) {
+                    notify();
+                    try {
+                        wait();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Battleship_server_clientThread.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    notify();
                 }
                 //game loop
                 while (true) {
@@ -334,12 +332,14 @@ public class Battleship_server_clientThread implements Runnable {
 
                     }
                     //sets this thread's status to ready
-                    synchronized (this) {
-                        READY2 = 1;
-                    }
-                    //checks if the other thread is ready, waits until it is ready
-                    while (READY1 != 1) {
-
+                    synchronized (lock) {
+                        notify();
+                        try {
+                            wait();
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(Battleship_server_clientThread.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        notify();
                     }
                     //checks if game is over
                     if (player1 == 17 && player2 == 17) {
