@@ -19,6 +19,7 @@ package battleshipserver;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,7 +43,7 @@ public class Battleship_server_clientThread implements Runnable {
     //used to hold the values of the x and y axes of the users input while targeting the opponents battleships
     int x, y;
     //counts the number of attempts the user made at the opponent's battleships
-    private volatile int TRIES1, TRIES2;
+    private volatile AtomicInteger TRIES1 = new AtomicInteger(), TRIES2 = new AtomicInteger();
     //hold the grids for both the players- coordinates1 holds player1's battleships- ie. player1 is aiming at coordinates2
     private volatile String[][] coordinates1 = new String[10][10], coordinates2 = new String[10][10];
     //is the socket connection to the player
@@ -54,7 +55,7 @@ public class Battleship_server_clientThread implements Runnable {
         //super("Battleship_server_clientThread");
         //client socket
         this.client = client;
-        //variable that decides which player this hread deals with
+        //variable that decides which player this thread deals with
         this.player = player;
     }
 
@@ -108,7 +109,7 @@ public class Battleship_server_clientThread implements Runnable {
                     String target = in.readUTF();
                     //increments the counter which keeps track of number of missiles fired
                     synchronized (this) {
-                        TRIES1++;
+                        TRIES1.addAndGet(1);
                     }
                     //stores the y-axis value of the target coordinate
                     y = ((int) (target.charAt(1))) - 1;
@@ -262,7 +263,7 @@ public class Battleship_server_clientThread implements Runnable {
                     String target = in.readUTF();
                     //increments the counter which keeps track of number of missiles fired
                     synchronized (this) {
-                        TRIES2++;
+                        TRIES2.addAndGet(1);
                     }
                     //stores the y-axis value of the target coordinate
                     y = ((int) (target.charAt(1))) - 1;
