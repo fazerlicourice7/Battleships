@@ -65,262 +65,10 @@ public class Battleship_client {
     //used to store the users target location
     String target;
 
-    public String battleship1() throws IOException {
-        //this method gets the coordinates for the players first battleship, sends it through a group of filters and if it passes returns the input to the calling method
-        while (true) {//continues until the input passes all the filters
-            System.out.println("Enter the location of your first battleship (length of 2)");
-            input = READ.readLine();
-            //checks if the input has the correct length
-            if (input.length() != 5) {
-                if (input.length() > 5) {
-                    System.out.println("Too many characters input.");
-                    System.out.println("Please Try again.");
-                } else {
-                    System.out.println("Not enough characters input");
-                    System.out.println("Please Try again.");
-                }
-                System.out.println("Enter location in the format 'LetterNumber LetterNumber' as demonstrated earlier.");
-                continue;
-            }
-            //if the length is correct, splits up the input to individual x and y coordinates to further manipulate them
-            index1 = letters.indexOf(input.charAt(0));
-            index2 = letters.indexOf(input.charAt(3));
-            x1 = (int) numbers.get(index1);
-            y1 = (int) input.charAt(1);
-            x2 = (int) numbers.get(index2);
-            y2 = (int) input.charAt(4);
-            //checks if the battleship is either vertical or horizontal
-            if (x1 == x2) {
-                //if it's vertical makes sure that the battleship occupies consecutive coordinates and is not split up all over the column
-                if (y1 - 1 != y2 && y1 + 1 != y2) {
-                    System.out.println("This Battleship does not occupy two immediate spaces and is split.");
-                    System.out.println("Please Try again.");
-                    continue;
-                }
-            } else if (y1 == y2) {
-                //if it's horizontal makes sure that the battleship occupies consecutive coordinates and is not split up all over the row
-                if (x1 - 1 != x2 && x1 + 1 != x2) {
-                    System.out.println("This Battleship does not occupy two immediate spaces and is split.");
-                    System.out.println("Please Try again.");
-                    continue;
-                }
-            } //checks if the same coordinate has been entered multiple times
-            else if (x1 == x2 && y1 == y2) {
-                System.out.println("You have entered the same coordinate twice.");
-                System.out.println("Please Try again.");
-                continue;
-            } //checks if the battleship is diagonal 
-            else {
-                System.out.println("This battleship is neither horizontal not vertical.");
-                System.out.println("Please Try again.");
-                continue;
-            }
-            //exit the loop if it passes all filters
-            break;
-        }
-        return input;
-    }
-
-    public String battleship23(String number) throws IOException {
-        //this method gets the coordinates for the players second/third battleship, sends it through a group of filters and if it passes returns the input to the calling method
-        while (true) {//continues until the input passes all the filters
-            System.out.println("Enter the location of your " + number + " battleship (length of 3)");
-            input = READ.readLine();
-            //checks if the input has the correct length
-            if (input.length() != 8) {
-                if (input.length() > 8) {
-                    System.out.println("Too many characters input.");
-                    System.out.println("Please Try again.");
-                } else {
-                    System.out.println("Not enough characters input");
-                    System.out.println("Please Try again.");
-                }
-                System.out.println("Enter location in the format 'LetterNumber LetterNumber LetterNumber' as demonstrated earlier.");
-                continue;
-            }
-            //if the length is correct, splits up the input to individual x and y coordinates to further manipulate them
-            index1 = letters.indexOf(input.charAt(0));
-            index2 = letters.indexOf(input.charAt(3));
-            index3 = letters.indexOf(input.charAt(6));
-            x1 = (int) numbers.get(index1);
-            y1 = (int) input.charAt(1);
-            x2 = (int) numbers.get(index2);
-            y2 = (int) input.charAt(4);
-            x3 = (int) numbers.get(index3);
-            y3 = (int) input.charAt(7);
-            //checks if the same coordinate has been entered multiple times
-            if ((x1 == x2 && y1 == y2) || (x2 == x3 && y2 == y3) || (x1 == x3 && y1 == y3)) {
-                System.out.println("You have entered the same coordinate multiple times.");
-                System.out.println("Please Try again.");
-                continue;
-            }//checks if the battleship is either vertical or horizontal 
-            else if (x1 == x2 && x2 == x3) {
-                //if it's vertical makes sure that the battleship occupies consecutive coordinates and is not split up all over the column
-                if ((y1 - 1 == y2 && y2 - 1 == y3) || (y1 + 1 == y2 && y2 + 1 == y3) || (y2 - 1 == y1 && y1 - 1 == y3) || (y3 - 1 == y1 && y1 - 1 == y2) || (y1 - 1 == y3 && y3 - 1 == y2) || (y2 - 1 == y3 && y3 - 1 == y1)) {
-
-                } else {
-                    System.out.println("This Battleship does not occupy immediate spaces and is split.");
-                    System.out.println("Please Try again.");
-                    continue;
-                }
-            } else if (y1 == y2 && y2 == y3) {
-                //if it's horizontal makes sure that the battleship occupies consecutive coordinates and is not split up all over the row
-                if ((x1 - 1 == x2 && x2 - 1 == x3) || (x1 + 1 == x2 && x2 + 1 == x3) || (x1 - 1 == x2 && x1 + 1 == x3) || (x1 + 1 == x2 && x1 - 1 == x3) || (x1 + 1 == x3 && x3 + 1 == x2) || (x1 - 1 == x3 && x3 - 1 == x2)) {
-
-                } else {
-                    System.out.println("This Battleship does not occupy immediate spaces and is split.");
-                    System.out.println("Please Try again.");
-                    continue;
-                }
-            } //checks if the battleship is diagonal 
-            else {
-                System.out.println("This battleship is neither horizontal not vertical.");
-                System.out.println("Please Try again.");
-                continue;
-            }
-            //exit the loop if it passes all filters
-            break;
-        }
-        return input;
-    }
-
-    public String battleship4() throws IOException {
-        //this method gets the coordinates for the players fourth battleship, sends it through a group of filters and if it passes returns the input to the calling method
-        while (true) {//continues until the input passes all the filters
-            System.out.println("Enter the location of your fourth battleship (length of 4)");
-            input = READ.readLine();
-            //checks if the input has the correct length
-            if (input.length() != 11) {
-                if (input.length() > 11) {
-                    System.out.println("Too many characters input.");
-                    System.out.println("Please Try again.");
-                } else {
-                    System.out.println("Not enough characters input");
-                    System.out.println("Please Try again.");
-                }
-                System.out.println("Enter location in the format 'LetterNumber LetterNumber LetterNumber' as demonstrated earlier.");
-                continue;
-            }
-            //if the length is correct, splits up the input to individual x and y coordinates to further manipulate them
-            index1 = letters.indexOf(input.charAt(0));
-            index2 = letters.indexOf(input.charAt(3));
-            index3 = letters.indexOf(input.charAt(6));
-            index4 = letters.indexOf(input.charAt(9));
-            x1 = (int) numbers.get(index1);
-            y1 = (int) input.charAt(1);
-            x2 = (int) numbers.get(index2);
-            y2 = (int) input.charAt(4);
-            x3 = (int) numbers.get(index3);
-            y3 = (int) input.charAt(7);
-            x4 = (int) numbers.get(index4);
-            y4 = (int) input.charAt(10);
-            //checks if the battleship is either vertical or horizontal
-            if (x1 == x2 && x2 == x3 && x3 == x4) {
-                //if it's vertical makes sure that the battleship occupies consecutive coordinates and is not split up all over the column
-                if ((y1 - 1 == y2 && y2 - 1 == y3 && y3 - 1 == y4) || (y1 + 1 == y2 && y2 + 1 == y3 && y3 + 1 == y4) || (y1 - 1 == y2 && y2 - 1 == y4 && y4 - 1 == y3) || (y1 - 1 == y3 && y3 - 1 == y2 && y2 - 1 == y4) || (y1 - 1 == y3 && y3 - 1 == y4 && y4 - 1 == y2) || (y1 - 1 == y4 && y4 - 1 == y3 && y3 - 1 == y2) || (y1 - 1 == y4 && y4 - 1 == y2 && y2 - 1 == y3) || (y2 - 1 == y1 && y1 - 1 == y3 && y3 - 1 == y4) || (y2 - 1 == y1 && y1 - 1 == y4 && y4 - 1 == y3) || (y2 - 1 == y3 && y3 - 1 == y1 && y1 - 1 == y4) || (y2 - 1 == y3 && y3 - 1 == y4 && y4 - 1 == y1) || (y2 - 1 == y4 && y4 - 1 == y3 && y3 - 1 == y1) || (y2 - 1 == y4 && y4 - 1 == y1 && y1 - 1 == y3) || (y3 - 1 == y1 && y1 - 1 == y2 && y2 - 1 == y4) || (y3 - 1 == y1 && y1 - 1 == y4 && y4 - 1 == y2) || (y3 - 1 == y2 && y2 - 1 == y1 && y1 - 1 == y4) || (y3 - 1 == y2 && y2 - 1 == y4 && y4 - 1 == y1) || (y3 - 1 == y4 && y4 - 1 == y1 && y1 - 1 == y2) || (y3 - 1 == y4 && y4 - 1 == y2 && y2 - 1 == y1) || (y4 - 1 == y1 && y1 - 1 == y2 && y2 - 1 == y3) || (y4 - 1 == y1 && y1 - 1 == y3 && y3 - 1 == y2) || (y4 - 1 == y2 && y2 - 1 == y3 && y3 - 1 == y1) || (y4 - 1 == y2 && y2 - 1 == y1 && y1 - 1 == y3) || (y4 - 1 == y3 && y3 - 1 == y1 && y1 - 1 == y2)) {
-
-                } else {
-                    System.out.println("This Battleship does not occupy immediate spaces and is split.");
-                    System.out.println("Please Try again.");
-                    continue;
-                }
-            } else if (y1 == y2 && y2 == y3 && y3 == y4) {
-                //if it's horizontal makes sure that the battleship occupies consecutive coordinates and is not split up all over the row
-                if ((x1 - 1 == x2 && x2 - 1 == x3 && x3 - 1 == x4) || (x1 + 1 == x2 && x2 + 1 == x3 && x3 + 1 == x4) || (x1 - 1 == x2 && x2 - 1 == x4 && x4 - 1 == x3) || (x1 - 1 == x3 && x3 - 1 == x2 && x2 - 1 == x4) || (x1 - 1 == x3 && x3 - 1 == x4 && x4 - 1 == x2) || (x1 - 1 == x4 && x4 - 1 == x3 && x3 - 1 == x2) || (x1 - 1 == x4 && x4 - 1 == x2 && x2 - 1 == x3) || (x2 - 1 == x1 && x1 - 1 == x3 && x3 - 1 == x4) || (x2 - 1 == x1 && x1 - 1 == x4 && x4 - 1 == x3) || (x2 - 1 == x3 && x3 - 1 == x1 && x1 - 1 == x4) || (x2 - 1 == x3 && x3 - 1 == x4 && y4 - 1 == y1) || (x2 - 1 == x4 && x4 - 1 == x3 && x3 - 1 == x1) || (x2 - 1 == x4 && x4 - 1 == x1 && x1 - 1 == x3) || (x3 - 1 == x1 && x1 - 1 == x2 && x2 - 1 == x4) || (x3 - 1 == x1 && x1 - 1 == x4 && x4 - 1 == x2) || (x3 - 1 == x2 && x2 - 1 == x1 && x1 - 1 == x4) || (x3 - 1 == x2 && x2 - 1 == x4 && x4 - 1 == x1) || (x3 - 1 == x4 && x4 - 1 == x1 && x1 - 1 == x2) || (x3 - 1 == x4 && x4 - 1 == x2 && x2 - 1 == x1) || (x4 - 1 == x1 && x1 - 1 == x2 && x2 - 1 == x3) || (x4 - 1 == x1 && x1 - 1 == x3 && x3 - 1 == x2) || (x4 - 1 == x2 && x2 - 1 == x3 && x3 - 1 == x1) || (x4 - 1 == x2 && x2 - 1 == x1 && x1 - 1 == x3) || (x4 - 1 == x3 && x3 - 1 == x1 && x1 - 1 == x2)) {
-
-                } else {
-                    System.out.println("This Battleship does not occupy immediate spaces and is split.");
-                    System.out.println("Please Try again.");
-                    continue;
-                }
-            } //checks if the same coordinate has been entered multiple times
-            else if ((x1 == x2 && y1 == y2) || (x2 == x3 && y2 == y3) || (x1 == x3 && y1 == y3) || (x4 == x1 && y4 == y1) || (x2 == x4 && y2 == y4) || (x3 == x4 && y3 == y4)) {
-                System.out.println("You have entered the same coordinate multiple times.");
-                System.out.println("Please Try again.");
-                continue;
-            } //checks if the battleship is diagonal 
-            else {
-                System.out.println("This battleship is neither horizontal not vertical.");
-                System.out.println("Please Try again.");
-                continue;
-            }
-            //exit the loop if it passes all filters
-            break;
-        }
-        return input;
-    }
-
-    public String battleship5() throws IOException {
-        //this method gets the coordinates for the players fifth battleship, sends it through a group of filters and if it passes returns the input to the calling method
-        while (true) {//continues until the input passes all the filters
-            System.out.println("Enter the location of your fifth battleship (length of 5)");
-            input = READ.readLine();
-            //checks if the input has the correct length
-            if (input.length() != 14) {
-                if (input.length() > 14) {
-                    System.out.println("Too many characters input.");
-                    System.out.println("Please Try again.");
-                } else {
-                    System.out.println("Not enough characters input");
-                    System.out.println("Please Try again.");
-                }
-                System.out.println("Enter location in the format 'LetterNumber LetterNumber LetterNumber' as demonstrated earlier.");
-                continue;
-            }
-            //if the length is correct, splits up the input to individual x and y coordinates to further manipulate them
-            index1 = letters.indexOf(input.charAt(0));
-            index2 = letters.indexOf(input.charAt(3));
-            index3 = letters.indexOf(input.charAt(6));
-            index4 = letters.indexOf(input.charAt(9));
-            index5 = letters.indexOf(input.charAt(12));
-            x1 = (int) numbers.get(index1);
-            y1 = (int) input.charAt(1);
-            x2 = (int) numbers.get(index2);
-            y2 = (int) input.charAt(4);
-            x3 = (int) numbers.get(index3);
-            y3 = (int) input.charAt(7);
-            x4 = (int) numbers.get(index4);
-            y4 = (int) input.charAt(10);
-            x5 = (int) numbers.get(index5);
-            y5 = (int) input.charAt(13);
-            //checks if the battleship is either vertical or horizontal
-            if (x1 == x2 && x2 == x3 && x3 == x4 && x4 == x5) {
-                //if it's vertical makes sure that the battleship occupies consecutive coordinates and is not split up all over the column
-                if ((y1 - 1 == y2 && y2 - 1 == y3 && y3 - 1 == y4 && y4 - 1 == y5) || (y1 - 1 == y2 && y2 - 1 == y3 && y3 - 1 == y5 && y5 - 1 == y4) || (y1 - 1 == y2 && y2 - 1 == y4 && y4 - 1 == y3 && y3 - 1 == y5) || (y1 - 1 == y2 && y2 - 1 == y4 && y4 - 1 == y5 && y5 - 1 == y3) || (y1 - 1 == y2 && y2 - 1 == y5 && y5 - 1 == y3 && y3 - 1 == y4) || (y1 - 1 == y2 && y2 - 1 == y5 && y5 - 1 == y4 && y4 - 1 == y3) || (y1 - 1 == y3 && y3 - 1 == y2 && y2 - 1 == y4 && y4 - 1 == y5) || (y1 - 1 == y3 && y3 - 1 == y2 && y2 - 1 == y5 && y5 - 1 == y4) || (y1 - 1 == y3 && y3 - 1 == y4 && y4 - 1 == y2 && y2 - 1 == y5) || (y1 - 1 == y3 && y3 - 1 == y4 && y4 - 1 == y5 && y5 - 1 == y2) || (y1 - 1 == y3 && y3 - 1 == y5 && y5 - 1 == y2 && y2 - 1 == y4) || (y1 - 1 == y3 && y3 - 1 == y5 && y5 - 1 == y4 && y4 - 1 == y2) || (y1 - 1 == y4 && y4 - 1 == y2 && y2 - 1 == y3 && y3 - 1 == y5) || (y1 - 1 == y4 && y4 - 1 == y2 && y2 - 1 == y5 && y5 - 1 == y3) || (y1 - 1 == y4 && y4 - 1 == y3 && y3 - 1 == y2 && y2 - 1 == y5) || (y1 - 1 == y4 && y4 - 1 == y3 && y3 - 1 == y5 && y5 - 1 == y2) || (y1 - 1 == y4 && y4 - 1 == y5 && y5 - 1 == y2 && y2 - 1 == y3) || (y1 - 1 == y4 && y4 - 1 == y5 && y5 - 1 == y3 && y3 - 1 == y2) || (y1 - 1 == y5 && y5 - 1 == y2 && y2 - 1 == y3 && y3 - 1 == y4) || (y1 - 1 == y5 && y5 - 1 == y2 && y2 - 1 == y4 && y4 - 1 == y3) || (y1 - 1 == y5 && y5 - 1 == y3 && y3 - 1 == y2 && y2 - 1 == y4) || (y1 - 1 == y5 && y5 - 1 == y3 && y3 - 1 == y4 && y4 - 1 == y2) || (y1 - 1 == y5 && y5 - 1 == y4 && y4 - 1 == y2 && y2 - 1 == y3) || (y1 - 1 == y5 && y5 - 1 == y4 && y4 - 1 == y3 && y3 - 1 == y2) || (y2 - 1 == y1 && y1 - 1 == y3 && y3 - 1 == y4 && y4 - 1 == y5) || (y2 - 1 == y1 && y1 - 1 == y3 && y3 - 1 == y5 && y5 - 1 == y4) || (y2 - 1 == y1 && y1 - 1 == y4 && y4 - 1 == y3 && y3 - 1 == y5) || (y2 - 1 == y1 && y1 - 1 == y4 && y4 - 1 == y5 && y5 - 1 == y3) || (y2 - 1 == y1 && y1 - 1 == y5 && y5 - 1 == y3 && y3 - 1 == y4) || (y2 - 1 == y1 && y1 - 1 == y5 && y5 - 1 == y4 && y4 - 1 == y3) || (y2 - 1 == y3 && y3 - 1 == y1 && y1 - 1 == y4 && y4 - 1 == y5) || (y2 - 1 == y3 && y3 - 1 == y1 && y1 - 1 == y5 && y5 - 1 == y4) || (y2 - 1 == y3 && y3 - 1 == y4 && y4 - 1 == y1 && y1 - 1 == y5) || (y2 - 1 == y3 && y3 - 1 == y4 && y4 - 1 == y5 && y5 - 1 == y1) || (y2 - 1 == y3 && y3 - 1 == y5 && y5 - 1 == y1 && y1 - 1 == y4) || (y2 - 1 == y3 && y3 - 1 == y5 && y5 - 1 == y4 && y4 - 1 == y1) || (y2 - 1 == y4 && y4 - 1 == y3 && y3 - 1 == y1 && y1 - 1 == y5) || (y2 - 1 == y4 && y4 - 1 == y3 && y3 - 1 == y5 && y5 - 1 == y1) || (y2 - 1 == y4 && y4 - 1 == y1 && y1 - 1 == y3 && y3 - 1 == y5) || (y2 - 1 == y4 && y4 - 1 == y1 && y1 - 1 == y5 && y5 - 1 == y3) || (y2 - 1 == y4 && y4 - 1 == y5 && y5 - 1 == y1 && y1 - 1 == y3) || (y2 - 1 == y4 && y4 - 1 == y5 && y5 - 1 == y3 && y3 - 1 == y1) || (y2 - 1 == y5 && y5 - 1 == y1 && y1 - 1 == y3 && y3 - 1 == y4) || (y2 - 1 == y5 && y5 - 1 == y1 && y1 - 1 == y4 && y4 - 1 == y3) || (y2 - 1 == y5 && y5 - 1 == y3 && y3 - 1 == y1 && y1 - 1 == y4) || (y2 - 1 == y5 && y5 - 1 == y3 && y3 - 1 == y4 && y4 - 1 == y1) || (y2 - 1 == y5 && y5 - 1 == y4 && y4 - 1 == y1 && y1 - 1 == y3) || (y2 - 1 == y5 && y5 - 1 == y4 && y4 - 1 == y3 && y3 - 1 == y1) || (y3 - 1 == y1 && y1 - 1 == y2 && y2 - 1 == y4 && y4 - 1 == y5) || (y3 - 1 == y1 && y1 - 1 == y2 && y2 - 1 == y5 && y5 - 1 == y4) || (y3 - 1 == y1 && y1 - 1 == y4 && y4 - 1 == y2 && y2 - 1 == y5) || (y3 - 1 == y1 && y1 - 1 == y4 && y4 - 1 == y5 && y5 - 1 == y2) || (y3 - 1 == y1 && y1 - 1 == y5 && y5 - 1 == y2 && y2 - 1 == y4) || (y3 - 1 == y1 && y1 - 1 == y5 && y5 - 1 == y2 && y2 - 1 == y4) || (y3 - 1 == y1 && y1 - 1 == y5 && y5 - 1 == y4 && y4 - 1 == y2) || (y3 - 1 == y2 && y2 - 1 == y1 && y1 - 1 == y4 && y4 - 1 == y5) || (y3 - 1 == y2 && y2 - 1 == y1 && y1 - 1 == y5 && y5 - 1 == y4) || (y3 - 1 == y2 && y2 - 1 == y4 && y4 - 1 == y1 && y1 - 1 == y5) || (y3 - 1 == y2 && y2 - 1 == y4 && y4 - 1 == y5 && y5 - 1 == y1) || (y3 - 1 == y2 && y2 - 1 == y5 && y5 - 1 == y1 && y1 - 1 == y4) || (y3 - 1 == y2 && y2 - 1 == y5 && y5 - 1 == y4 && y4 - 1 == y1) || (y3 - 1 == y4 && y4 - 1 == y2 && y2 - 1 == y1 && y1 - 1 == y5) || (y3 - 1 == y4 && y4 - 1 == y2 && y2 - 1 == y5 && y5 - 1 == y1) || (y3 - 1 == y4 && y4 - 1 == y1 && y1 - 1 == y2 && y2 - 1 == y5) || (y3 - 1 == y4 && y4 - 1 == y1 && y1 - 1 == y5 && y5 - 1 == y2) || (y3 - 1 == y4 && y4 - 1 == y5 && y5 - 1 == y1 && y1 - 1 == y2) || (y3 - 1 == y4 && y4 - 1 == y5 && y5 - 1 == y2 && y2 - 1 == y1) || (y3 - 1 == y5 && y5 - 1 == y1 && y1 - 1 == y2 && y2 - 1 == y4) || (y3 - 1 == y5 && y5 - 1 == y1 && y1 - 1 == y4 && y4 - 1 == y2) || (y3 - 1 == y5 && y5 - 1 == y2 && y2 - 1 == y1 && y1 - 1 == y4) || (y3 - 1 == y5 && y5 - 1 == y2 && y2 - 1 == y4 && y4 - 1 == y1) || (y3 - 1 == y5 && y5 - 1 == y4 && y4 - 1 == y1 && y1 - 1 == y2) || (y3 - 1 == y5 && y5 - 1 == y4 && y4 - 1 == y2 && y2 - 1 == y1) || (y4 - 1 == y1 && y1 - 1 == y2 && y2 - 1 == y3 && y3 - 1 == y5) || (y4 - 1 == y1 && y1 - 1 == y2 && y2 - 1 == y5 && y5 - 1 == y3) || (y4 - 1 == y1 && y1 - 1 == y3 && y3 - 1 == y2 && y2 - 1 == y5) || (y4 - 1 == y1 && y1 - 1 == y3 && y3 - 1 == y5 && y5 - 1 == y2) || (y4 - 1 == y1 && y1 - 1 == y5 && y5 - 1 == y2 && y2 - 1 == y3) || (y4 - 1 == y1 && y1 - 1 == y5 && y5 - 1 == y3 && y3 - 1 == y2) || (y4 - 1 == y2 && y2 - 1 == y1 && y1 - 1 == y3 && y3 - 1 == y5) || (y4 - 1 == y2 && y2 - 1 == y1 && y1 - 1 == y5 && y5 - 1 == y3) || (y4 - 1 == y2 && y2 - 1 == y3 && y3 - 1 == y1 && y1 - 1 == y5) || (y4 - 1 == y2 && y2 - 1 == y3 && y3 - 1 == y5 && y5 - 1 == y1) || (y4 - 1 == y2 && y2 - 1 == y5 && y5 - 1 == y1 && y1 - 1 == y3) || (y4 - 1 == y2 && y2 - 1 == y5 && y5 - 1 == y3 && y3 - 1 == y1) || (y4 - 1 == y3 && y3 - 1 == y1 && y1 - 1 == y2 && y2 - 1 == y5) || (y4 - 1 == y3 && y3 - 1 == y1 && y1 - 1 == y5 && y5 - 1 == y2) || (y4 - 1 == y3 && y3 - 1 == y2 && y2 - 1 == y1 && y1 - 1 == y5) || (y4 - 1 == y3 && y3 - 1 == y2 && y2 - 1 == y5 && y5 - 1 == y1) || (y4 - 1 == y3 && y3 - 1 == y5 && y5 - 1 == y1 && y1 - 1 == y2) || (y4 - 1 == y3 && y3 - 1 == y5 && y5 - 1 == y2 && y2 - 1 == y1) || (y4 - 1 == y5 && y5 - 1 == y1 && y1 - 1 == y2 && y2 - 1 == y3) || (y4 - 1 == y5 && y5 - 1 == y1 && y1 - 1 == y3 && y3 - 1 == y2) || (y4 - 1 == y5 && y5 - 1 == y2 && y2 - 1 == y1 && y1 - 1 == y3) || (y4 - 1 == y5 && y5 - 1 == y2 && y2 - 1 == y3 && y3 - 1 == y1) || (y4 - 1 == y5 && y5 - 1 == y3 && y3 - 1 == y1 && y1 - 1 == y2) || (y4 - 1 == y5 && y5 - 1 == y3 && y3 - 1 == y2 && y2 - 1 == y1) || (y5 - 1 == y1 && y1 - 1 == y2 && y2 - 1 == y3 && y3 - 1 == y4) || (y5 - 1 == y1 && y1 - 1 == y2 && y2 - 1 == y4 && y4 - 1 == y3) || (y5 - 1 == y1 && y1 - 1 == y3 && y3 - 1 == y2 && y2 - 1 == y4) || (y5 - 1 == y1 && y1 - 1 == y3 && y3 - 1 == y4 && y4 - 1 == y2) || (y5 - 1 == y1 && y1 - 1 == y4 && y4 - 1 == y2 && y2 - 1 == y3) || (y5 - 1 == y1 && y1 - 1 == y4 && y4 - 1 == y3 && y3 - 1 == y2) || (y5 - 1 == y2 && y2 - 1 == y1 && y1 - 1 == y3 && y3 - 1 == y4) || (y5 - 1 == y2 && y2 - 1 == y1 && y1 - 1 == y4 && y4 - 1 == y3) || (y5 - 1 == y2 && y2 - 1 == y3 && y3 - 1 == y1 && y1 - 1 == y4) || (y5 - 1 == y2 && y2 - 1 == y3 && y3 - 1 == y4 && y4 - 1 == y1) || (y5 - 1 == y2 && y2 - 1 == y4 && y4 - 1 == y1 && y1 - 1 == y3) || (y5 - 1 == y2 && y2 - 1 == y4 && y4 - 1 == y3 && y3 - 1 == y1) || (y5 - 1 == y3 && y3 - 1 == y1 && y1 - 1 == y2 && y2 - 1 == y4) || (y5 - 1 == y3 && y3 - 1 == y1 && y1 - 1 == y4 && y4 - 1 == y2) || (y5 - 1 == y3 && y3 - 1 == y2 && y2 - 1 == y1 && y1 - 1 == y4) || (y5 - 1 == y3 && y3 - 1 == y2 && y2 - 1 == y4 && y4 - 1 == y1) || (y5 - 1 == y3 && y3 - 1 == y4 && y4 - 1 == y1 && y1 - 1 == y2) || (y5 - 1 == y3 && y3 - 1 == y4 && y4 - 1 == y2 && y2 - 1 == y1) || (y5 - 1 == y4 && y4 - 1 == y1 && y1 - 1 == y2 && y2 - 1 == y3) || (y5 - 1 == y4 && y4 - 1 == y1 && y1 - 1 == y3 && y3 - 1 == y2) || (y5 - 1 == y4 && y4 - 1 == y2 && y2 - 1 == y1 && y1 - 1 == y3) || (y5 - 1 == y4 && y4 - 1 == y2 && y2 - 1 == y3 && y3 - 1 == y1) || (y5 - 1 == y4 && y4 - 1 == y3 && y3 - 1 == y1 && y1 - 1 == y2) || (y5 - 1 == y4 && y4 - 1 == y3 && y3 - 1 == y2 && y2 - 1 == y1)) {
-
-                } else {
-                    System.out.println("This Battleship does not occupy immediate spaces and is split.");
-                    System.out.println("Please Try again.");
-                    continue;
-                }
-            } else if (y1 == y2 && y2 == y3 && y3 == y4 && y4 == y5) {
-                //if it's horizontal makes sure that the battleship occupies consecutive coordinates and is not split up all over the row
-                if ((x1 - 1 == x2 && x2 - 1 == x3 && x3 - 1 == x4 && x4 - 1 == x5) || (x1 - 1 == x2 && x2 - 1 == x3 && x3 - 1 == x5 && x5 - 1 == x4) || (x1 - 1 == x2 && x2 - 1 == x4 && x4 - 1 == x3 && x3 - 1 == x5) || (x1 - 1 == x2 && x2 - 1 == x4 && x4 - 1 == x5 && x5 - 1 == x3) || (x1 - 1 == x2 && x2 - 1 == x5 && x5 - 1 == x3 && x3 - 1 == x4) || (x1 - 1 == x2 && x2 - 1 == x5 && x5 - 1 == x4 && x4 - 1 == x3) || (x1 - 1 == x3 && x3 - 1 == x2 && x2 - 1 == x4 && x4 - 1 == x5) || (x1 - 1 == x3 && x3 - 1 == x2 && x2 - 1 == x5 && x5 - 1 == x4) || (x1 - 1 == x3 && x3 - 1 == x4 && x4 - 1 == x2 && x2 - 1 == x5) || (x1 - 1 == x3 && x3 - 1 == x4 && x4 - 1 == x5 && x5 - 1 == x2) || (x1 - 1 == x3 && x3 - 1 == x5 && x5 - 1 == x2 && x2 - 1 == x4) || (x1 - 1 == x3 && x3 - 1 == x5 && x5 - 1 == x4 && x4 - 1 == x2) || (x1 - 1 == x4 && x4 - 1 == x2 && x2 - 1 == x3 && x3 - 1 == x5) || (x1 - 1 == x4 && x4 - 1 == x2 && x2 - 1 == x5 && x5 - 1 == x3) || (x1 - 1 == x4 && x4 - 1 == x3 && x3 - 1 == x2 && x2 - 1 == x5) || (x1 - 1 == x4 && x4 - 1 == x3 && x3 - 1 == x5 && x5 - 1 == x2) || (x1 - 1 == x4 && x4 - 1 == x5 && x5 - 1 == x2 && x2 - 1 == x3) || (x1 - 1 == x4 && x4 - 1 == x5 && x5 - 1 == x3 && x3 - 1 == x2) || (x1 - 1 == x5 && x5 - 1 == x2 && x2 - 1 == x3 && x3 - 1 == x4) || (x1 - 1 == x5 && x5 - 1 == x2 && x2 - 1 == x4 && x4 - 1 == x3) || (x1 - 1 == x5 && x5 - 1 == x3 && x3 - 1 == x2 && x2 - 1 == x4) || (x1 - 1 == x5 && x5 - 1 == x3 && x3 - 1 == x4 && x4 - 1 == x2) || (x1 - 1 == x5 && x5 - 1 == x4 && x4 - 1 == x2 && x2 - 1 == x3) || (x1 - 1 == x5 && x5 - 1 == x4 && x4 - 1 == x3 && x3 - 1 == x2) || (x2 - 1 == x1 && x1 - 1 == x3 && x3 - 1 == x4 && x4 - 1 == x5) || (x2 - 1 == x1 && x1 - 1 == x3 && x3 - 1 == x5 && x5 - 1 == x4) || (x2 - 1 == x1 && x1 - 1 == x4 && x4 - 1 == x3 && x3 - 1 == x5) || (x2 - 1 == x1 && x1 - 1 == x4 && x4 - 1 == x5 && x5 - 1 == x3) || (x2 - 1 == x1 && x1 - 1 == x5 && x5 - 1 == x3 && x3 - 1 == x4) || (x2 - 1 == x1 && x1 - 1 == x5 && x5 - 1 == x4 && x4 - 1 == x3) || (x2 - 1 == x3 && x3 - 1 == x1 && x1 - 1 == x4 && x4 - 1 == x5) || (x2 - 1 == x3 && x3 - 1 == x1 && x1 - 1 == x5 && x5 - 1 == x4) || (x2 - 1 == x3 && x3 - 1 == x4 && x4 - 1 == x1 && x1 - 1 == x5) || (x2 - 1 == x3 && x3 - 1 == x4 && x4 - 1 == x5 && x5 - 1 == x1) || (x2 - 1 == x3 && x3 - 1 == x5 && x5 - 1 == x1 && x1 - 1 == x4) || (x2 - 1 == x3 && x3 - 1 == x5 && x5 - 1 == x4 && x4 - 1 == x1) || (x2 - 1 == x4 && x4 - 1 == x3 && x3 - 1 == x1 && x1 - 1 == x5) || (x2 - 1 == x4 && x4 - 1 == x3 && x3 - 1 == x5 && x5 - 1 == x1) || (x2 - 1 == x4 && x4 - 1 == x1 && x1 - 1 == x3 && x3 - 1 == x5) || (x2 - 1 == x4 && x4 - 1 == x1 && x1 - 1 == x5 && x5 - 1 == x3) || (x2 - 1 == x4 && x4 - 1 == x5 && x5 - 1 == x1 && x1 - 1 == x3) || (x2 - 1 == x4 && x4 - 1 == x5 && x5 - 1 == x3 && x3 - 1 == x1) || (x2 - 1 == x5 && x5 - 1 == x1 && x1 - 1 == x3 && x3 - 1 == x4) || (x2 - 1 == x5 && x5 - 1 == x1 && x1 - 1 == x4 && x4 - 1 == x3) || (x2 - 1 == x5 && x5 - 1 == x3 && x3 - 1 == x1 && x1 - 1 == x4) || (x2 - 1 == x5 && x5 - 1 == x3 && x3 - 1 == x4 && x4 - 1 == x1) || (x2 - 1 == x5 && x5 - 1 == x4 && x4 - 1 == x1 && x1 - 1 == x3) || (x2 - 1 == x5 && x5 - 1 == x4 && x4 - 1 == x3 && x3 - 1 == x1) || (x3 - 1 == x1 && x1 - 1 == x2 && x2 - 1 == x4 && x4 - 1 == x5) || (x3 - 1 == x1 && x1 - 1 == x2 && x2 - 1 == x5 && x5 - 1 == x4) || (x3 - 1 == x1 && x1 - 1 == x4 && x4 - 1 == x2 && x2 - 1 == x5) || (x3 - 1 == x1 && x1 - 1 == x4 && x4 - 1 == x5 && x5 - 1 == x2) || (x3 - 1 == x1 && x1 - 1 == x5 && x5 - 1 == x2 && x2 - 1 == x4) || (x3 - 1 == x1 && x1 - 1 == x5 && x5 - 1 == x2 && x2 - 1 == x4) || (x3 - 1 == x1 && x1 - 1 == x5 && x5 - 1 == x4 && x4 - 1 == x2) || (x3 - 1 == x2 && x2 - 1 == x1 && x1 - 1 == x4 && x4 - 1 == x5) || (x3 - 1 == x2 && x2 - 1 == x1 && x1 - 1 == x5 && x5 - 1 == x4) || (x3 - 1 == x2 && x2 - 1 == x4 && x4 - 1 == x1 && x1 - 1 == x5) || (x3 - 1 == x2 && x2 - 1 == x4 && x4 - 1 == x5 && x5 - 1 == x1) || (x3 - 1 == x2 && x2 - 1 == x5 && x5 - 1 == x1 && x1 - 1 == x4) || (x3 - 1 == x2 && x2 - 1 == x5 && x5 - 1 == x4 && x4 - 1 == x1) || (x3 - 1 == x4 && x4 - 1 == x2 && x2 - 1 == x1 && x1 - 1 == x5) || (x3 - 1 == x4 && x4 - 1 == x2 && x2 - 1 == x5 && x5 - 1 == x1) || (x3 - 1 == x4 && x4 - 1 == x1 && x1 - 1 == x2 && x2 - 1 == x5) || (x3 - 1 == x4 && x4 - 1 == x1 && x1 - 1 == x5 && x5 - 1 == x2) || (x3 - 1 == x4 && x4 - 1 == x5 && x5 - 1 == x1 && x1 - 1 == x2) || (x3 - 1 == x4 && x4 - 1 == x5 && x5 - 1 == x2 && x2 - 1 == x1) || (x3 - 1 == x5 && x5 - 1 == x1 && x1 - 1 == x2 && x2 - 1 == x4) || (x3 - 1 == x5 && x5 - 1 == x1 && x1 - 1 == x4 && x4 - 1 == x2) || (x3 - 1 == x5 && x5 - 1 == x2 && x2 - 1 == x1 && x1 - 1 == x4) || (x3 - 1 == x5 && x5 - 1 == x2 && x2 - 1 == x4 && x4 - 1 == x1) || (x3 - 1 == x5 && x5 - 1 == x4 && x4 - 1 == x1 && x1 - 1 == x2) || (x3 - 1 == x5 && x5 - 1 == x4 && x4 - 1 == x2 && x2 - 1 == x1) || (x4 - 1 == x1 && x1 - 1 == x2 && x2 - 1 == x3 && x3 - 1 == x5) || (x4 - 1 == x1 && x1 - 1 == x2 && x2 - 1 == x5 && x5 - 1 == x3) || (x4 - 1 == x1 && x1 - 1 == x3 && x3 - 1 == x2 && x2 - 1 == x5) || (x4 - 1 == x1 && x1 - 1 == x3 && x3 - 1 == x5 && x5 - 1 == x2) || (x4 - 1 == x1 && x1 - 1 == x5 && x5 - 1 == x2 && x2 - 1 == x3) || (x4 - 1 == x1 && x1 - 1 == x5 && x5 - 1 == x3 && x3 - 1 == x2) || (x4 - 1 == x2 && x2 - 1 == x1 && x1 - 1 == x3 && x3 - 1 == x5) || (x4 - 1 == x2 && x2 - 1 == x1 && x1 - 1 == x5 && x5 - 1 == x3) || (x4 - 1 == x2 && x2 - 1 == x3 && x3 - 1 == x1 && x1 - 1 == x5) || (x4 - 1 == x2 && x2 - 1 == x3 && x3 - 1 == x5 && x5 - 1 == x1) || (x4 - 1 == x2 && x2 - 1 == x5 && x5 - 1 == x1 && x1 - 1 == x3) || (x4 - 1 == x2 && x2 - 1 == x5 && x5 - 1 == x3 && x3 - 1 == x1) || (x4 - 1 == x3 && x3 - 1 == x1 && x1 - 1 == x2 && x2 - 1 == x5) || (x4 - 1 == x3 && x3 - 1 == x1 && x1 - 1 == x5 && x5 - 1 == x2) || (x4 - 1 == x3 && x3 - 1 == x2 && x2 - 1 == x1 && x1 - 1 == x5) || (x4 - 1 == x3 && x3 - 1 == x2 && x2 - 1 == x5 && x5 - 1 == x1) || (x4 - 1 == x3 && x3 - 1 == x5 && x5 - 1 == x1 && x1 - 1 == x2) || (x4 - 1 == x3 && x3 - 1 == x5 && x5 - 1 == x2 && x2 - 1 == x1) || (x4 - 1 == x5 && x5 - 1 == x1 && x1 - 1 == x2 && x2 - 1 == x3) || (x4 - 1 == x5 && x5 - 1 == x1 && x1 - 1 == x3 && x3 - 1 == x2) || (x4 - 1 == x5 && x5 - 1 == x2 && x2 - 1 == x1 && x1 - 1 == x3) || (x4 - 1 == x5 && x5 - 1 == x2 && x2 - 1 == x3 && x3 - 1 == x1) || (x4 - 1 == x5 && x5 - 1 == x3 && x3 - 1 == x1 && x1 - 1 == x2) || (x4 - 1 == x5 && x5 - 1 == x3 && x3 - 1 == x2 && x2 - 1 == x1) || (x5 - 1 == x1 && x1 - 1 == x2 && x2 - 1 == x3 && x3 - 1 == x4) || (x5 - 1 == x1 && x1 - 1 == x2 && x2 - 1 == x4 && x4 - 1 == x3) || (x5 - 1 == x1 && x1 - 1 == x3 && x3 - 1 == x2 && x2 - 1 == x4) || (x5 - 1 == x1 && x1 - 1 == x3 && x3 - 1 == x4 && x4 - 1 == x2) || (x5 - 1 == x1 && x1 - 1 == x4 && x4 - 1 == x2 && x2 - 1 == x3) || (x5 - 1 == x1 && x1 - 1 == x4 && x4 - 1 == x3 && x3 - 1 == x2) || (x5 - 1 == x2 && x2 - 1 == x1 && x1 - 1 == x3 && x3 - 1 == x4) || (x5 - 1 == x2 && x2 - 1 == x1 && x1 - 1 == x4 && x4 - 1 == x3) || (x5 - 1 == x2 && x2 - 1 == x3 && x3 - 1 == x1 && x1 - 1 == x4) || (x5 - 1 == x2 && x2 - 1 == x3 && x3 - 1 == x4 && x4 - 1 == x1) || (x5 - 1 == x2 && x2 - 1 == x4 && x4 - 1 == x1 && x1 - 1 == x3) || (x5 - 1 == x2 && x2 - 1 == x4 && x4 - 1 == x3 && x3 - 1 == x1) || (x5 - 1 == x3 && x3 - 1 == x1 && x1 - 1 == x2 && x2 - 1 == x4) || (x5 - 1 == x3 && x3 - 1 == x1 && x1 - 1 == x4 && x4 - 1 == x2) || (x5 - 1 == x3 && x3 - 1 == x2 && x2 - 1 == x1 && x1 - 1 == x4) || (x5 - 1 == x3 && x3 - 1 == x2 && x2 - 1 == x4 && x4 - 1 == x1) || (x5 - 1 == x3 && x3 - 1 == x4 && x4 - 1 == x1 && x1 - 1 == x2) || (x5 - 1 == x3 && x3 - 1 == x4 && x4 - 1 == x2 && x2 - 1 == x1) || (x5 - 1 == x4 && x4 - 1 == x1 && x1 - 1 == x2 && x2 - 1 == x3) || (x5 - 1 == x4 && x4 - 1 == x1 && x1 - 1 == x3 && x3 - 1 == x2) || (x5 - 1 == x4 && x4 - 1 == x2 && x2 - 1 == x1 && x1 - 1 == x3) || (x5 - 1 == x4 && x4 - 1 == x2 && x2 - 1 == x3 && x3 - 1 == x1) || (x5 - 1 == x4 && x4 - 1 == x3 && x3 - 1 == x1 && x1 - 1 == x2) || (x5 - 1 == x4 && x4 - 1 == x3 && x3 - 1 == x2 && x2 - 1 == x1)) {
-
-                } else {
-                    System.out.println("This Battleship does not occupy immediate spaces and is split.");
-                    System.out.println("Please Try again.");
-                    continue;
-                }
-            } //checks if the same coordinate has been entered multiple times
-            else if ((x1 == x2 && y1 == y2) || (x2 == x3 && y2 == y3) || (x1 == x3 && y1 == y3) || (x4 == x1 && y4 == y1) || (x2 == x4 && y2 == y4) || (x3 == x4 && y3 == y4) || (x1 == x5 && y1 == y5) || (x2 == x5 && y2 == y5) || (x3 == x5 || y3 == y5) || (x4 == x5 && y4 == y5)) {
-                System.out.println("You have entered the same coordinate multiple times.");
-                System.out.println("Please Try again.");
-                continue;
-            } //checks if the battleship is diagonal 
-            else {
-                System.out.println("This battleship is neither horizontal not vertical.");
-                System.out.println("Please Try again.");
-                continue;
-            }
-            //exit the loop if it passes all filters
-            break;
-        }
-        return input;
-    }
-
     public void doStuff() throws IOException, ClassNotFoundException {
-        Battleship_client methodCaller = new Battleship_client();
+        //Battleship_client methodCaller = new Battleship_client();
+        getBattleships GetBattleships = new getBattleships();
+        printGrids printDem = new printGrids();
         //initializes the arraylist numbers and letters with the first ten of their respective characters for use while the player sets the locations
         for (int loop = 0; loop < 10; loop++) {
             numbers.add(loop, loop);
@@ -347,42 +95,37 @@ public class Battleship_client {
             coordinates1 = (String[][]) in.readObject();
             coordinates2 = (String[][]) in.readObject();
             //prints out the grid and starts taking in user input
-            System.out.println("  A B C D E F G H I J");
-            for (int loop = 0; loop < 10; loop++) {
-                System.out.print(loop + " ");
-                for (int loop2 = 0; loop2 < 10; loop2++) {
-                    System.out.print(coordinates1[loop][loop2]);
-                }
-                System.out.println();
-            }
+            printDem.grid1(coordinates1);
+
             System.out.println("Enter the location of your battleships. THEY CAN BE HORIZONTAL AND VERTICAL ONLY! " + "\n" + "In the format LetterNumber LetterNumber LetterNumber....");
             System.out.println("Example: A9 A8 A7, A1 B1 C1");
             //initializes the String array locations allowing us to append to it later
             for (int randomloop = 0; randomloop < 17; randomloop++) {
                 locations[randomloop] = "";
             }
+
             //calls the method to get the location of the first battleship
-            String battleship1 = methodCaller.battleship1();
+            String battleship1 = GetBattleships.battleship1();
             String location[] = battleship1.split(" ");
             locations[0] = location[0];
             locations[1] = location[1];
 
             //calls the method to get the location of the second battleship
-            String battleship2 = methodCaller.battleship23("second");
+            String battleship2 = GetBattleships.battleship23("second");
             String location2[] = battleship2.split(" ");
             locations[2] = location2[0];
             locations[3] = location2[1];
             locations[4] = location2[2];
 
             //calls the method to get the location of the third battleship
-            String battleship3 = methodCaller.battleship23("third");
+            String battleship3 = GetBattleships.battleship23("third");
             String location3[] = battleship3.split(" ");
             locations[5] = location3[0];
             locations[6] = location3[1];
             locations[7] = location3[2];
 
             //calls the method to get the location of the fourth battleship
-            String battleship4 = methodCaller.battleship4();
+            String battleship4 = GetBattleships.battleship4();
             String location4[] = battleship4.split(" ");
             locations[8] = location4[0];
             locations[9] = location4[1];
@@ -390,7 +133,7 @@ public class Battleship_client {
             locations[11] = location4[3];
 
             //calls the method to get the location of the fifth battleship
-            String battleship5 = methodCaller.battleship5();
+            String battleship5 = GetBattleships.battleship5();
             String location5[] = battleship5.split(" ");
             locations[12] = location5[0];
             locations[13] = location5[1];
@@ -407,22 +150,8 @@ public class Battleship_client {
                 coordinates1 = (String[][]) in.readObject();
                 coordinates2 = (String[][]) in.readObject();
                 //prints the two grids
-                for (int loop = 0; loop < 10; loop++) {
-                    System.out.println("  A B C D E F G H I J");
-                    System.out.print(loop + " ");
-                    for (int loop2 = 0; loop2 < 10; loop2++) {
-                        System.out.print(coordinates1[loop][loop2]);
-                    }
-                    System.out.println();
-                }
-                for (int loop = 0; loop < 10; loop++) {
-                    System.out.println("  A B C D E F G H I J");
-                    System.out.print(loop + " ");
-                    for (int loop2 = 0; loop2 < 10; loop2++) {
-                        System.out.print(coordinates2[loop][loop2]);
-                    }
-                    System.out.println();
-                }
+                printDem.grid1(coordinates1);
+                printDem.grid2(coordinates2);
                 //gets the target coordinate from the player and validates it
                 while (true) {
                     System.out.println("Enter the target coordinate. eg: A7, H4 etc.");
@@ -459,13 +188,7 @@ public class Battleship_client {
                 coordinates2 = (String[][]) in.readObject();
                 //prints grid and starts taking user input
                 System.out.println("  A B C D E F G H I J");
-                for (int loop = 0; loop < 10; loop++) {
-                    System.out.print(loop + " ");
-                    for (int loop2 = 0; loop2 < 10; loop2++) {
-                        System.out.print(coordinates1[loop][loop2]);
-                    }
-                    System.out.println();
-                }
+                printDem.grid1(coordinates1);
                 System.out.println("Enter the location of your battleships. THEY CAN BE HORIZONTAL AND VERTICAL ONLY! " + "\n" + "In the format LetterNumber LetterNumber LetterNumber....");
                 System.out.println("Example: A9 A8 A7, A1 B1 C1");
                 //initializes the String array locations allowing us to append to it later
@@ -473,27 +196,27 @@ public class Battleship_client {
                     locations[randomloop] = "";
                 }
                 //calls the method to get the location of the first battleship
-                String battleship1 = methodCaller.battleship1();
+                String battleship1 = GetBattleships.battleship1();
                 String location[] = battleship1.split(" ");
                 locations[0] = location[0];
                 locations[1] = location[1];
 
                 //calls the method to get the location of the second battleship
-                String battleship2 = methodCaller.battleship23("second");
+                String battleship2 = GetBattleships.battleship23("second");
                 String location2[] = battleship2.split(" ");
                 locations[2] = location2[0];
                 locations[3] = location2[1];
                 locations[4] = location2[2];
 
                 //calls the method to get the location of the third battleship
-                String battleship3 = methodCaller.battleship23("third");
+                String battleship3 = GetBattleships.battleship23("third");
                 String location3[] = battleship3.split(" ");
                 locations[5] = location3[0];
                 locations[6] = location3[1];
                 locations[7] = location3[2];
 
                 //calls the method to get the location of the fourth battleship
-                String battleship4 = methodCaller.battleship4();
+                String battleship4 = GetBattleships.battleship4();
                 String location4[] = battleship4.split(" ");
                 locations[8] = location4[0];
                 locations[9] = location4[1];
@@ -501,7 +224,7 @@ public class Battleship_client {
                 locations[11] = location4[3];
 
                 //calls the method to get the location of the fifth battleship
-                String battleship5 = methodCaller.battleship5();
+                String battleship5 = GetBattleships.battleship5();
                 String location5[] = battleship5.split(" ");
                 locations[12] = location5[0];
                 locations[13] = location5[1];
@@ -518,22 +241,8 @@ public class Battleship_client {
                     coordinates1 = (String[][]) in.readObject();
                     coordinates2 = (String[][]) in.readObject();
                     //prints the two grids
-                    for (int loop = 0; loop < 10; loop++) {
-                        System.out.println("  A B C D E F G H I J");
-                        System.out.print(loop + " ");
-                        for (int loop2 = 0; loop2 < 10; loop2++) {
-                            System.out.print(coordinates1[loop][loop2]);
-                        }
-                        System.out.println();
-                    }
-                    for (int loop = 0; loop < 10; loop++) {
-                        System.out.println("  A B C D E F G H I J");
-                        System.out.print(loop + " ");
-                        for (int loop2 = 0; loop2 < 10; loop2++) {
-                            System.out.print(coordinates2[loop][loop2]);
-                        }
-                        System.out.println();
-                    }
+                    printDem.grid1(coordinates1);
+                    printDem.grid2(coordinates2);
                     //gets the target coordinate from the player and validates it
                     while (true) {
                         System.out.println("Enter the target coordinate. eg: A7, H4 etc.");

@@ -60,17 +60,12 @@ public class Battleship_server_clientThread implements Runnable {
 
     @Override
     public void run() {
+        Grid grid1 = new Grid();
+        Grid grid2 = new Grid();
+        getInput getIt = new getInput();
         //initializes the 10x10 grids for the player
-        synchronized (this) {
-            //outer loop is for the rows
-            for (int loop = 0; loop < 10; loop++) {
-                //the inner loop is for the columns
-                for (int loop2 = 0; loop2 < 10; loop2++) {
-                    coordinates1[loop][loop2] = "~ ";
-                    coordinates2[loop][loop2] = "~ ";
-                }
-            }
-        }
+        coordinates1 = grid1.init();
+        coordinates2 = grid2.init();
         if (player == 1) {
             //deals with the client assuming it is player1
             //declares Object i/o streams
@@ -113,27 +108,7 @@ public class Battleship_server_clientThread implements Runnable {
                     //stores the y-axis value of the target coordinate
                     y = ((int) (target.charAt(1))) - 1;
                     //determines and then stores the x-axis value of the coordinate
-                    if (target.charAt(0) == 'A') {
-                        x = A;
-                    } else if (target.charAt(0) == 'B') {
-                        x = B;
-                    } else if (target.charAt(0) == 'C') {
-                        x = C;
-                    } else if (target.charAt(0) == 'D') {
-                        x = D;
-                    } else if (target.charAt(0) == 'E') {
-                        x = E;
-                    } else if (target.charAt(0) == 'F') {
-                        x = F;
-                    } else if (target.charAt(0) == 'G') {
-                        x = G;
-                    } else if (target.charAt(0) == 'H') {
-                        x = H;
-                    } else if (target.charAt(0) == 'I') {
-                        x = I;
-                    } else if (target.charAt(0) == 'J') {
-                        x = J;
-                    }
+                    x = getIt.getX(target);
                     //checks if the player's target corresponds with any of the opponents battleship's locations
                     for (int loop = 0; loop < xy1.length; loop++) {
                         //if yes then mark that spot with an 'X' to indicate a hit
