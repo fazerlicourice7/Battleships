@@ -26,7 +26,10 @@ import java.util.logging.Logger;
  * @author fazerlicourice71256
  */
 public class Battleship_serverThread extends Thread {
-    
+    //counts the number of attempts the user made at the opponent's battleships
+    private volatile int TRIES1, TRIES2;
+    //hold the grids for both the players- coordinates1 holds player1's battleships- ie. player1 is aiming at coordinates2
+    private volatile String[][] coordinates1 = new String[10][10], coordinates2 = new String[10][10];
     public final Socket client1;
     public Socket client2;
     public int PORT = 54321;

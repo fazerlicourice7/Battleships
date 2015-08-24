@@ -2,6 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group/>
+=======
+        <group>
+            <file>file:/C:/Users/18balanagav/git/Battleships/BattleshipClient/src/battleshipclient/Battleship_client.java</file>
+        </group>
+>>>>>>> 9be07bce08934c7efe8b4b0255312670fb808d0c
     </open-files>
 </project-private>
