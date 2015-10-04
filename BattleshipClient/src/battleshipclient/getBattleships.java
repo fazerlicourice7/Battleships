@@ -60,17 +60,18 @@ public class getBattleships {
                 continue;
             }
             //if the length is correct, splits up the input to individual x and y coordinates to further manipulate them
+
+            index1 = letters.indexOf(input.toUpperCase().charAt(0));
+            index2 = letters.indexOf(input.toUpperCase().charAt(3));
             try {
-                index1 = letters.indexOf(input.toUpperCase().charAt(0));
-                index2 = letters.indexOf(input.toUpperCase().charAt(3));
+                x1 = (int) numbers.get(index1);
+                y1 = (int) input.charAt(1);
+                x2 = (int) numbers.get(index2);
+                y2 = (int) input.charAt(4);
             } catch (IndexOutOfBoundsException ex) {
                 System.out.println("Error! \nPlease retry");
                 continue;
             }
-            x1 = (int) numbers.get(index1);
-            y1 = (int) input.charAt(1);
-            x2 = (int) numbers.get(index2);
-            y2 = (int) input.charAt(4);
             //checks if the battleship is either vertical or horizontal
             if (x1 == x2) {
                 //if it's vertical makes sure that the battleship occupies consecutive coordinates and is not split up all over the column
@@ -130,20 +131,21 @@ public class getBattleships {
                 continue;
             }
             //if the length is correct, splits up the input to individual x and y coordinates to further manipulate them
+
+            index1 = letters.indexOf(input.toUpperCase().charAt(0));
+            index2 = letters.indexOf(input.toUpperCase().charAt(3));
+            index3 = letters.indexOf(input.toUpperCase().charAt(6));
             try {
-                index1 = letters.indexOf(input.toUpperCase().charAt(0));
-                index2 = letters.indexOf(input.toUpperCase().charAt(3));
-                index3 = letters.indexOf(input.toUpperCase().charAt(6));
+                x1 = (int) numbers.get(index1);
+                y1 = (int) input.charAt(1);
+                x2 = (int) numbers.get(index2);
+                y2 = (int) input.charAt(4);
+                x3 = (int) numbers.get(index3);
+                y3 = (int) input.charAt(7);
             } catch (IndexOutOfBoundsException ex) {
                 System.out.println("Error! \nPlease retry.");
                 continue;
             }
-            x1 = (int) numbers.get(index1);
-            y1 = (int) input.charAt(1);
-            x2 = (int) numbers.get(index2);
-            y2 = (int) input.charAt(4);
-            x3 = (int) numbers.get(index3);
-            y3 = (int) input.charAt(7);
             //checks if the same coordinate has been entered multiple times
             if ((x1 == x2 && y1 == y2) || (x2 == x3 && y2 == y3) || (x1 == x3 && y1 == y3)) {
                 System.out.println("You have entered the same coordinate multiple times.");
@@ -205,23 +207,24 @@ public class getBattleships {
                 continue;
             }
             //if the length is correct, splits up the input to individual x and y coordinates to further manipulate them
+
+            index1 = letters.indexOf(input.toUpperCase().charAt(0));
+            index2 = letters.indexOf(input.toUpperCase().charAt(3));
+            index3 = letters.indexOf(input.toUpperCase().charAt(6));
+            index4 = letters.indexOf(input.toUpperCase().charAt(9));
             try {
-                index1 = letters.indexOf(input.toUpperCase().charAt(0));
-                index2 = letters.indexOf(input.toUpperCase().charAt(3));
-                index3 = letters.indexOf(input.toUpperCase().charAt(6));
-                index4 = letters.indexOf(input.toUpperCase().charAt(9));
+                x1 = (int) numbers.get(index1);
+                y1 = (int) input.charAt(1);
+                x2 = (int) numbers.get(index2);
+                y2 = (int) input.charAt(4);
+                x3 = (int) numbers.get(index3);
+                y3 = (int) input.charAt(7);
+                x4 = (int) numbers.get(index4);
+                y4 = (int) input.charAt(10);
             } catch (IndexOutOfBoundsException ex) {
                 System.out.println("Error! \nPlease retry.");
                 continue;
             }
-            x1 = (int) numbers.get(index1);
-            y1 = (int) input.charAt(1);
-            x2 = (int) numbers.get(index2);
-            y2 = (int) input.charAt(4);
-            x3 = (int) numbers.get(index3);
-            y3 = (int) input.charAt(7);
-            x4 = (int) numbers.get(index4);
-            y4 = (int) input.charAt(10);
             //checks if the battleship is either vertical or horizontal
             if (x1 == x2 && x2 == x3 && x3 == x4) {
                 //if it's vertical makes sure that the battleship occupies consecutive coordinates and is not split up all over the column
@@ -283,26 +286,27 @@ public class getBattleships {
                 continue;
             }
             //if the length is correct, splits up the input to individual x and y coordinates to further manipulate them
+
+            index1 = letters.indexOf(input.toUpperCase().charAt(0));
+            index2 = letters.indexOf(input.toUpperCase().charAt(3));
+            index3 = letters.indexOf(input.toUpperCase().charAt(6));
+            index4 = letters.indexOf(input.toUpperCase().charAt(9));
+            index5 = letters.indexOf(input.toUpperCase().charAt(12));
             try {
-                index1 = letters.indexOf(input.toUpperCase().charAt(0));
-                index2 = letters.indexOf(input.toUpperCase().charAt(3));
-                index3 = letters.indexOf(input.toUpperCase().charAt(6));
-                index4 = letters.indexOf(input.toUpperCase().charAt(9));
-                index5 = letters.indexOf(input.toUpperCase().charAt(12));
-            } catch(IndexOutOfBoundsException ex){
+                x1 = (int) numbers.get(index1);
+                y1 = (int) input.charAt(1);
+                x2 = (int) numbers.get(index2);
+                y2 = (int) input.charAt(4);
+                x3 = (int) numbers.get(index3);
+                y3 = (int) input.charAt(7);
+                x4 = (int) numbers.get(index4);
+                y4 = (int) input.charAt(10);
+                x5 = (int) numbers.get(index5);
+                y5 = (int) input.charAt(13);
+            } catch (IndexOutOfBoundsException ex) {
                 System.out.println("Error! \nPlease retry.");
                 continue;
             }
-            x1 = (int) numbers.get(index1);
-            y1 = (int) input.charAt(1);
-            x2 = (int) numbers.get(index2);
-            y2 = (int) input.charAt(4);
-            x3 = (int) numbers.get(index3);
-            y3 = (int) input.charAt(7);
-            x4 = (int) numbers.get(index4);
-            y4 = (int) input.charAt(10);
-            x5 = (int) numbers.get(index5);
-            y5 = (int) input.charAt(13);
             //checks if the battleship is either vertical or horizontal
             if (x1 == x2 && x2 == x3 && x3 == x4 && x4 == x5) {
                 //if it's vertical makes sure that the battleship occupies consecutive coordinates and is not split up all over the column

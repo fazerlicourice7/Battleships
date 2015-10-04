@@ -125,6 +125,9 @@ public class Battleship_client {
             out.writeObject(locations); //writes the string array of coordinates to the server
             out.flush();
 
+            for (int i = 0; i < 10; i++) {
+                System.out.println(numbers.get(i));
+            }
             while (true) { //starts the game loop
 
                 coordinates1 = (String[][]) in.readObject(); //reads the two grids
@@ -136,8 +139,13 @@ public class Battleship_client {
                 while (true) {  //gets the target coordinate from the player and validates it
                     System.out.println("Enter the target coordinate. eg: A7, H4 etc.");
                     target = READ.readLine();
+                    for (int i = 0; i < 10; i++) {
+                        System.out.println(numbers.get(i));
+                    }
                     System.out.println(target.toUpperCase().charAt(0));
                     System.out.println(target.toUpperCase().charAt(1));
+                    System.out.println(letters.contains(target.toUpperCase().charAt(0)));
+                    System.out.println(numbers.contains(target.toUpperCase().charAt(1)));
                     if (letters.contains(target.toUpperCase().charAt(0)) && numbers.contains(target.toUpperCase().charAt(1))) {
                         break;
                     }
@@ -211,6 +219,10 @@ public class Battleship_client {
 
                 out.writeObject(locations); //writes the string array of coordinates to the server
                 out.flush();
+
+                for (int i = 0; i < 10; i++) {
+                    System.out.println(numbers.get(i));
+                }
                 while (true) { //starts the game loop
                     coordinates1 = (String[][]) in.readObject(); //reads the two grids
                     coordinates2 = (String[][]) in.readObject();
@@ -219,8 +231,13 @@ public class Battleship_client {
                     while (true) { //gets the target coordinate from the player and validates it
                         System.out.println("Enter the target coordinate. eg: A7, H4 etc.");
                         target = READ.readLine();
+                        for (int i = 0; i < 10; i++) {
+                            System.out.println(numbers.get(i));
+                        }
                         System.out.println(target.toUpperCase().charAt(0));
                         System.out.println(target.toUpperCase().charAt(1));
+                        System.out.println(letters.contains(target.toUpperCase().charAt(0)));
+                        System.out.println(numbers.contains(target.toUpperCase().charAt(1)));
                         if (letters.contains(target.toUpperCase().charAt(0)) && numbers.contains(target.toUpperCase().charAt(1))) {
                             break;
                         }
