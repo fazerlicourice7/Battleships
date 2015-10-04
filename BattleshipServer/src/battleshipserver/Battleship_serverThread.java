@@ -19,6 +19,7 @@ package battleshipserver;
 import java.io.*;
 import java.net.Socket;
 import java.net.ServerSocket;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,40 +27,44 @@ import java.util.logging.Logger;
  * @author fazerlicourice71256
  */
 public class Battleship_serverThread extends Thread {
-    //counts the number of attempts the user made at the opponent's battleships
-    private volatile int TRIES1, TRIES2;
-    //hold the grids for both the players- coordinates1 holds player1's battleships- ie. player1 is aiming at coordinates2
-    private volatile String[][] coordinates1 = new String[10][10], coordinates2 = new String[10][10];
+    static volatile AtomicInteger TRIES1, TRIES2; //counts the number of attempts the user made at the opponent's battleships
+    private volatile String[][] coordinates1 = new String[10][10], coordinates2 = new String[10][10]; //hold the grids for both the players- coordinates1 holds player1's battleships- ie. player1 is aiming at coordinates2
     public final Socket client1;
     public Socket client2;
     public int PORT = 54321;
-    
+    static final Object lock = new Object(); //object that is used as the intrisic lock for the synchronized statements
+    static volatile String[] xy1, xy2;
+
+    /**
+     * Constructor
+     * @param client1 
+     */
     Battleship_serverThread(Socket client1) {
         super("Battleship_serverThread");
         this.client1 = client1;
     }
 
-    //run method
+    /**
+     * Creates two threads. One for each client.
+     *
+     * @throws SecurityException
+     * @throws IllegalArgumentException
+     */
     @Override
-    public synchronized void run()throws SecurityException, IllegalArgumentException{
+    public synchronized void run() throws SecurityException, IllegalArgumentException {
         try (
-                ServerSocket serversocket = new ServerSocket(PORT)){
+                ServerSocket serversocket = new ServerSocket(PORT)) {
             client2 = serversocket.accept();
             int player = 2;
             Runnable CLIENT2 = new battleshipserver.Battleship_server_clientThread(client2, player);
             new Thread(CLIENT2).start();
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(Battleship_serverThread.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-        finally {
+        } finally {
             int player = 1;
             Runnable CLIENT1;
             CLIENT1 = new battleshipserver.Battleship_server_clientThread(client1, player);
             new Thread(CLIENT1).start();
         }
-        
-        
-        
     }
 }

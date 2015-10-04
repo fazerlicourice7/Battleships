@@ -60,8 +60,13 @@ public class getBattleships {
                 continue;
             }
             //if the length is correct, splits up the input to individual x and y coordinates to further manipulate them
-            index1 = letters.indexOf(input.charAt(0));
-            index2 = letters.indexOf(input.charAt(3));
+            try {
+                index1 = letters.indexOf(input.toUpperCase().charAt(0));
+                index2 = letters.indexOf(input.toUpperCase().charAt(3));
+            } catch (IndexOutOfBoundsException ex) {
+                System.out.println("Error! \nPlease retry");
+                continue;
+            }
             x1 = (int) numbers.get(index1);
             y1 = (int) input.charAt(1);
             x2 = (int) numbers.get(index2);
@@ -125,9 +130,14 @@ public class getBattleships {
                 continue;
             }
             //if the length is correct, splits up the input to individual x and y coordinates to further manipulate them
-            index1 = letters.indexOf(input.charAt(0));
-            index2 = letters.indexOf(input.charAt(3));
-            index3 = letters.indexOf(input.charAt(6));
+            try {
+                index1 = letters.indexOf(input.toUpperCase().charAt(0));
+                index2 = letters.indexOf(input.toUpperCase().charAt(3));
+                index3 = letters.indexOf(input.toUpperCase().charAt(6));
+            } catch (IndexOutOfBoundsException ex) {
+                System.out.println("Error! \nPlease retry.");
+                continue;
+            }
             x1 = (int) numbers.get(index1);
             y1 = (int) input.charAt(1);
             x2 = (int) numbers.get(index2);
@@ -195,10 +205,15 @@ public class getBattleships {
                 continue;
             }
             //if the length is correct, splits up the input to individual x and y coordinates to further manipulate them
-            index1 = letters.indexOf(input.charAt(0));
-            index2 = letters.indexOf(input.charAt(3));
-            index3 = letters.indexOf(input.charAt(6));
-            index4 = letters.indexOf(input.charAt(9));
+            try {
+                index1 = letters.indexOf(input.toUpperCase().charAt(0));
+                index2 = letters.indexOf(input.toUpperCase().charAt(3));
+                index3 = letters.indexOf(input.toUpperCase().charAt(6));
+                index4 = letters.indexOf(input.toUpperCase().charAt(9));
+            } catch (IndexOutOfBoundsException ex) {
+                System.out.println("Error! \nPlease retry.");
+                continue;
+            }
             x1 = (int) numbers.get(index1);
             y1 = (int) input.charAt(1);
             x2 = (int) numbers.get(index2);
@@ -268,11 +283,16 @@ public class getBattleships {
                 continue;
             }
             //if the length is correct, splits up the input to individual x and y coordinates to further manipulate them
-            index1 = letters.indexOf(input.charAt(0));
-            index2 = letters.indexOf(input.charAt(3));
-            index3 = letters.indexOf(input.charAt(6));
-            index4 = letters.indexOf(input.charAt(9));
-            index5 = letters.indexOf(input.charAt(12));
+            try {
+                index1 = letters.indexOf(input.toUpperCase().charAt(0));
+                index2 = letters.indexOf(input.toUpperCase().charAt(3));
+                index3 = letters.indexOf(input.toUpperCase().charAt(6));
+                index4 = letters.indexOf(input.toUpperCase().charAt(9));
+                index5 = letters.indexOf(input.toUpperCase().charAt(12));
+            } catch(IndexOutOfBoundsException ex){
+                System.out.println("Error! \nPlease retry.");
+                continue;
+            }
             x1 = (int) numbers.get(index1);
             y1 = (int) input.charAt(1);
             x2 = (int) numbers.get(index2);

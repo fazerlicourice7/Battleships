@@ -21,9 +21,14 @@ package battleshipclient;
  */
 public class printGrids {
 
+    /**
+     * Prints your grid.
+     *
+     * @param coordinates1
+     */
     public void grid1(String[][] coordinates1) {
+        System.out.println("  A B C D E F G H I J");
         for (int loop = 0; loop < 10; loop++) {
-            System.out.println("  A B C D E F G H I J");
             System.out.print(loop + " ");
             for (int loop2 = 0; loop2 < 10; loop2++) {
                 System.out.print(coordinates1[loop][loop2]);
@@ -32,9 +37,14 @@ public class printGrids {
         }
     }
 
+    /**
+     * Prints your opponents grid. Your target grid.
+     *
+     * @param coordinates2
+     */
     public void grid2(String[][] coordinates2) {
+        System.out.println("  A B C D E F G H I J");
         for (int loop = 0; loop < 10; loop++) {
-            System.out.println("  A B C D E F G H I J");
             System.out.print(loop + " ");
             for (int loop2 = 0; loop2 < 10; loop2++) {
                 System.out.print(coordinates2[loop][loop2]);

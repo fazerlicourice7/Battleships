@@ -23,7 +23,6 @@ import java.net.Socket;
 /**
  * @author fazerlicourice71256
  */
-
 /**
  * This is the server side of an application called Battleships. It is a virtual
  * recreation of the board game battleship. This is a turn based game in which
@@ -40,29 +39,23 @@ import java.net.Socket;
  * opponents battleships, and fire 'missiles' at the targeted location and both
  * players get feedback as to whether their shot hit or missed and whether any
  * of their ships were hit or not.
- *
- *
  */
 public class Battleship_server {
 
-    //initializes integer PORT with the value if the port on which the server listens.
-
+    //initializes integer PORT with the value of the port on which the server listens.
     static int PORT = 12345;
     static Socket client;
     static Battleship_serverThread client1;
-    public static synchronized void main(String[] args) throws IOException, SecurityException, IllegalArgumentException{
-        //creates a loop that re-iterates forever(while the program is running).
+
+    public static synchronized void main(String[] args) throws IOException, SecurityException, IllegalArgumentException {
         while (true) {
-            //creates a ServerSocket that listens for requests on port:PORT
-            try (
+            try ( //creates a ServerSocket that listens for requests on port:PORT
                     ServerSocket serversocket = new ServerSocket(PORT);) {
-                //spawns a new thread each time a client connects
-                client = serversocket.accept();
+                client = serversocket.accept(); //spawns a new thread each time a client connects
                 client1 = new battleshipserver.Battleship_serverThread(client);
                 client1.start();
                 System.out.println("Connection established");
             }
         }
-        
     }
 }

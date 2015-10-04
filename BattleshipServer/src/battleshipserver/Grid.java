@@ -22,8 +22,8 @@ package battleshipserver;
  */
 public class Grid {
 
-    String[][] coordinates;
-
+    String[][] coordinates = new String[10][10];
+    
     /**
      * Initializes the 2 dimensional array with blanks (~).
      *

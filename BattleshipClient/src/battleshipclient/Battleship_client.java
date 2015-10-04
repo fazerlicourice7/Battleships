@@ -25,52 +25,39 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * @author fazerlicourice71256
- */
-/**
  * This is the client side of an application called Battleships.
  *
+ * @author fazerlicourice71256
  */
 public class Battleship_client {
 
-    //defines and initializes an input stream reader
-    BufferedReader READ = new BufferedReader(new InputStreamReader(System.in));
-    //used to take generic input from the player
-    String input;
-    //contains the value of the port number to which it should connect
-    public static int PORT1 = 12345, PORT2 = 54321;
-    //used as a constructor for the socket
-    public static InetAddress host;
-    //defines an object input stream 'in'
-    ObjectInputStream in;
-    //defines an object output stream 'out'
-    ObjectOutputStream out;
-    //contains the grid for the player(player's target)
-    String coordinates1[][] = new String[10][10];
-    //contains the grid for the opponent(opponent's target)
-    String coordinates2[][] = new String[10][10];
-    //contains the coordinates of the players battleships
-    String locations[] = new String[17];
-    //used to manipulate each individual coordinate to verify its integrity with respect to the other coordinates of that battleship
-    int x1, x2, x3, x4, x5;
+    BufferedReader READ = new BufferedReader(new InputStreamReader(System.in)); //defines and initializes an input stream reader
+    String input; //used to take generic input from the player
+    public static int PORT1 = 12345, PORT2 = 54321; //contains the value of the port number to which it should connect
+    public static InetAddress host; //used as a constructor for the socket
+    ObjectInputStream in; //defines an object input stream 'in'
+    ObjectOutputStream out; //defines an object output stream 'out'
+    String coordinates1[][] = new String[10][10]; //contains the grid for the player(player's target)
+    String coordinates2[][] = new String[10][10]; //contains the grid for the opponent(opponent's target)
+    String locations[] = new String[17]; //contains the coordinates of the players battleships
+    int x1, x2, x3, x4, x5; //used to manipulate each individual coordinate to verify its integrity with respect to the other coordinates of that battleship
     int y1, y2, y3, y4, y5;
-    //used along with arraylist to locate the corresponding numbers and letters
-    int index1, index2, index3, index4, index5;
-    //used to manipulate the coordinates and find corresponding numbers and letters
-    static ArrayList numbers = new ArrayList(), letters = new ArrayList();
-    //contains all the various ip addresses on which servers are currently running
-    static List<InetAddress> IP = new ArrayList<>();
-    //used to randomly pick an ip address from the arraylist which contains ip addresses
-    Random random = new Random();
-    //used to store the users target location
-    String target;
+    int index1, index2, index3, index4, index5; //used along with arraylist to locate the corresponding numbers and letters
+    static ArrayList numbers = new ArrayList(), letters = new ArrayList(); //used to manipulate the coordinates and find corresponding numbers and letters
+    static List<InetAddress> IP = new ArrayList<>(); //contains all the various ip addresses on which servers are currently running
+    Random random = new Random(); //used to randomly pick an ip address from the arraylist which contains ip addresses
+    String target; //used to store the users target location
 
+    /**
+     * The interface between the player and the server.
+     *
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void doStuff() throws IOException, ClassNotFoundException {
-        //Battleship_client methodCaller = new Battleship_client();
         getBattleships GetBattleships = new getBattleships();
         printGrids printDem = new printGrids();
-        //initializes the arraylist numbers and letters with the first ten of their respective characters for use while the player sets the locations
-        for (int loop = 0; loop < 10; loop++) {
+        for (int loop = 0; loop < 10; loop++) { //initializes the arraylist numbers and letters with the first ten of their respective characters for use while the player sets the locations
             numbers.add(loop, loop);
         }
         letters.add(0, 'A');
@@ -83,24 +70,18 @@ public class Battleship_client {
         letters.add(7, 'H');
         letters.add(8, 'I');
         letters.add(9, 'J');
-        //chooses a random IP address from the array list of ip addresses.
-        host = IP.get(random.nextInt(IP.size()));
+        host = IP.get(random.nextInt(IP.size())); //chooses a random IP address from the array list of ip addresses.
         String HOST = "localhost";
-        //attempts to initialize the socket
-        try (Socket connection = new Socket(HOST, PORT2)) {
+        try (Socket connection = new Socket(HOST, PORT2)) { //attempts to initialize the socket
             System.out.println("Connected to player 1. Starting game.");
             out = new ObjectOutputStream(connection.getOutputStream());
             in = new ObjectInputStream(connection.getInputStream());
-            //reads the initial grid for both players from the server
-            coordinates1 = (String[][]) in.readObject();
+            coordinates1 = (String[][]) in.readObject(); //reads the initial grid for both players from the server
             coordinates2 = (String[][]) in.readObject();
-            //prints out the grid and starts taking in user input
-            printDem.grid1(coordinates1);
-
+            printDem.grid1(coordinates1); //prints out the grid and starts taking in user input
             System.out.println("Enter the location of your battleships. THEY CAN BE HORIZONTAL AND VERTICAL ONLY! " + "\n" + "In the format LetterNumber LetterNumber LetterNumber....");
             System.out.println("Example: A9 A8 A7, A1 B1 C1");
-            //initializes the String array locations allowing us to append to it later
-            for (int randomloop = 0; randomloop < 17; randomloop++) {
+            for (int randomloop = 0; randomloop < 17; randomloop++) { //initializes the String array locations allowing us to append to it later
                 locations[randomloop] = "";
             }
 
@@ -141,31 +122,31 @@ public class Battleship_client {
             locations[15] = location5[3];
             locations[16] = location5[4];
 
-            //writes the string array of coordinates to the server
-            out.writeObject(locations);
+            out.writeObject(locations); //writes the string array of coordinates to the server
             out.flush();
-            //starts the game loop
-            while (true) {
-                //reads the two grids
-                coordinates1 = (String[][]) in.readObject();
+
+            while (true) { //starts the game loop
+
+                coordinates1 = (String[][]) in.readObject(); //reads the two grids
                 coordinates2 = (String[][]) in.readObject();
-                //prints the two grids
-                printDem.grid1(coordinates1);
+
+                printDem.grid1(coordinates1); //prints the two grids
                 printDem.grid2(coordinates2);
-                //gets the target coordinate from the player and validates it
-                while (true) {
+
+                while (true) {  //gets the target coordinate from the player and validates it
                     System.out.println("Enter the target coordinate. eg: A7, H4 etc.");
                     target = READ.readLine();
-                    char[] validationxy = target.toCharArray();
-                    if (letters.contains(validationxy[0]) == true && numbers.contains(validationxy[1]) == true) {
+                    System.out.println(target.toUpperCase().charAt(0));
+                    System.out.println(target.toUpperCase().charAt(1));
+                    if (letters.contains(target.toUpperCase().charAt(0)) && numbers.contains(target.toUpperCase().charAt(1))) {
                         break;
                     }
-
+                    System.out.println("Error! \nPlease re-try.");
                 }
-                //after validating, writes the target location to the server
-                out.writeUTF(target);
-                //server checks if it's a hit or a miss and updates the grid
 
+                out.writeUTF(target);  //after validating, writes the target location to the server
+
+                //server checks if it's a hit or a miss and updates the grid
                 //checks if the someone has won yet
                 String GameOver;
                 GameOver = in.readUTF();
@@ -180,21 +161,17 @@ public class Battleship_client {
         } catch (ConnectException ex) {
             try (Socket connection = new Socket(HOST, PORT1)) {
                 System.out.println("Connected to server. Waiting for player 2.");
-                //initializes the input and output streams
-                out = new ObjectOutputStream(connection.getOutputStream());
+                out = new ObjectOutputStream(connection.getOutputStream()); //initializes the input and output streams
                 in = new ObjectInputStream(connection.getInputStream());
-                //reads the initial grid for both players from the server
-                coordinates1 = (String[][]) in.readObject();
+                coordinates1 = (String[][]) in.readObject(); //reads the initial grid for both players from the server
                 coordinates2 = (String[][]) in.readObject();
-                //prints grid and starts taking user input
-                System.out.println("  A B C D E F G H I J");
-                printDem.grid1(coordinates1);
+                printDem.grid1(coordinates1); //prints grid and starts taking user input
                 System.out.println("Enter the location of your battleships. THEY CAN BE HORIZONTAL AND VERTICAL ONLY! " + "\n" + "In the format LetterNumber LetterNumber LetterNumber....");
                 System.out.println("Example: A9 A8 A7, A1 B1 C1");
-                //initializes the String array locations allowing us to append to it later
-                for (int randomloop = 0; randomloop < 17; randomloop++) {
+                for (int randomloop = 0; randomloop < 17; randomloop++) { //initializes the String array locations allowing us to append to it later
                     locations[randomloop] = "";
                 }
+
                 //calls the method to get the location of the first battleship
                 String battleship1 = GetBattleships.battleship1();
                 String location[] = battleship1.split(" ");
@@ -232,31 +209,26 @@ public class Battleship_client {
                 locations[15] = location5[3];
                 locations[16] = location5[4];
 
-                //writes the string array of coordinates to the server
-                out.writeObject(locations);
+                out.writeObject(locations); //writes the string array of coordinates to the server
                 out.flush();
-                //starts the game loop
-                while (true) {
-                    //reads the two grids
-                    coordinates1 = (String[][]) in.readObject();
+                while (true) { //starts the game loop
+                    coordinates1 = (String[][]) in.readObject(); //reads the two grids
                     coordinates2 = (String[][]) in.readObject();
-                    //prints the two grids
-                    printDem.grid1(coordinates1);
+                    printDem.grid1(coordinates1); //prints the two grids
                     printDem.grid2(coordinates2);
-                    //gets the target coordinate from the player and validates it
-                    while (true) {
+                    while (true) { //gets the target coordinate from the player and validates it
                         System.out.println("Enter the target coordinate. eg: A7, H4 etc.");
                         target = READ.readLine();
-                        char[] validationxy = target.toCharArray();
-                        if (letters.contains(validationxy[0]) == true && numbers.contains(validationxy[1]) == true) {
+                        System.out.println(target.toUpperCase().charAt(0));
+                        System.out.println(target.toUpperCase().charAt(1));
+                        if (letters.contains(target.toUpperCase().charAt(0)) && numbers.contains(target.toUpperCase().charAt(1))) {
                             break;
                         }
-
+                        System.out.println("Error! \nPlease re-try.");
                     }
-                    //after validating, writes the target location to the server
-                    out.writeUTF(target);
-                    //server checks if it's a hit or a miss and updates the grid
+                    out.writeUTF(target); //after validating, writes the target location to the server
 
+                    //server checks if it's a hit or a miss and updates the grid
                     //checks if the someone has won yet
                     String GameOver;
                     GameOver = in.readUTF();
@@ -264,15 +236,19 @@ public class Battleship_client {
                         System.out.println("Game Over!!");
                         System.out.println(in.readUTF());
                         break;
-                    } else if (GameOver.equals("0")) {
-                    }
-
+                    } else if (GameOver.equals("0")) ;
                 }
             }
         }
-
     }
 
+    /**
+     * Adds IP Addresses of all the current server to a list. Starts doStuff()
+     *
+     * @param args
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public static void main(String args[]) throws IOException, ClassNotFoundException {
         Battleship_client obj = new Battleship_client();
         //adds ip addresses to the arraylist containing ip addresses
