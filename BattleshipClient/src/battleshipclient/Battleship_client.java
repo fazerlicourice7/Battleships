@@ -124,29 +124,22 @@ public class Battleship_client {
 
             out.writeObject(locations); //writes the string array of coordinates to the server
             out.flush();
-
-            for (int i = 0; i < 10; i++) {
-                System.out.println(numbers.get(i));
-            }
             while (true) { //starts the game loop
 
                 coordinates1 = (String[][]) in.readObject(); //reads the two grids
                 coordinates2 = (String[][]) in.readObject();
-
+              
                 printDem.grid1(coordinates1); //prints the two grids
                 printDem.grid2(coordinates2);
 
                 while (true) {  //gets the target coordinate from the player and validates it
                     System.out.println("Enter the target coordinate. eg: A7, H4 etc.");
                     target = READ.readLine();
-                    for (int i = 0; i < 10; i++) {
-                        System.out.println(numbers.get(i));
-                    }
-                    System.out.println(target.toUpperCase().charAt(0));
-                    System.out.println(target.toUpperCase().charAt(1));
-                    System.out.println(letters.contains(target.toUpperCase().charAt(0)));
-                    System.out.println(numbers.contains(target.toUpperCase().charAt(1)));
-                    if (letters.contains(target.toUpperCase().charAt(0)) && numbers.contains(target.toUpperCase().charAt(1))) {
+
+                    int x = Character.getNumericValue((target.charAt(1)));
+                    System.out.println(x);
+                    System.out.println(numbers.contains(x));
+                    if (letters.contains(target.toUpperCase().charAt(0)) && numbers.contains(x)) {
                         break;
                     }
                     System.out.println("Error! \nPlease re-try.");
@@ -158,13 +151,12 @@ public class Battleship_client {
                 //checks if the someone has won yet
                 String GameOver;
                 GameOver = in.readUTF();
+               System.out.println("read game over");
                 if (GameOver.equals("1")) {
                     System.out.println("Game Over!!");
                     System.out.println(in.readUTF());
                     break;
-                } else if (GameOver.equals("0")) {
-                }
-
+                } else if (GameOver.equals("0")) ;
             }
         } catch (ConnectException ex) {
             try (Socket connection = new Socket(HOST, PORT1)) {
@@ -219,10 +211,6 @@ public class Battleship_client {
 
                 out.writeObject(locations); //writes the string array of coordinates to the server
                 out.flush();
-
-                for (int i = 0; i < 10; i++) {
-                    System.out.println(numbers.get(i));
-                }
                 while (true) { //starts the game loop
                     coordinates1 = (String[][]) in.readObject(); //reads the two grids
                     coordinates2 = (String[][]) in.readObject();
@@ -231,14 +219,17 @@ public class Battleship_client {
                     while (true) { //gets the target coordinate from the player and validates it
                         System.out.println("Enter the target coordinate. eg: A7, H4 etc.");
                         target = READ.readLine();
-                        for (int i = 0; i < 10; i++) {
-                            System.out.println(numbers.get(i));
-                        }
-                        System.out.println(target.toUpperCase().charAt(0));
-                        System.out.println(target.toUpperCase().charAt(1));
-                        System.out.println(letters.contains(target.toUpperCase().charAt(0)));
-                        System.out.println(numbers.contains(target.toUpperCase().charAt(1)));
-                        if (letters.contains(target.toUpperCase().charAt(0)) && numbers.contains(target.toUpperCase().charAt(1))) {
+                        /*for (int i = 0; i < 10; i++) {
+                         System.out.println(numbers.get(i));
+                         }
+                         System.out.println(target.toUpperCase().charAt(0));
+                         System.out.println(target.toUpperCase().charAt(1));
+                         System.out.println(letters.contains(target.toUpperCase().charAt(0)));*/
+
+                        int x = Character.getNumericValue(target.charAt(1));
+                        System.out.println(x);
+                        System.out.println(numbers.contains(x));
+                        if (letters.contains(target.toUpperCase().charAt(0)) && numbers.contains(x)) {
                             break;
                         }
                         System.out.println("Error! \nPlease re-try.");
@@ -249,6 +240,7 @@ public class Battleship_client {
                     //checks if the someone has won yet
                     String GameOver;
                     GameOver = in.readUTF();
+                    System.out.println("read gameover");
                     if (GameOver.equals("1")) {
                         System.out.println("Game Over!!");
                         System.out.println(in.readUTF());

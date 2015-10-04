@@ -29,7 +29,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * The main server thread that does all the computation for the game and interfaces with the client.
+ * The main server thread that does all the computation for the game and
+ * interfaces with the client.
+ *
  * @author fazerlicourice7
  */
 public class Battleship_server_clientThread implements Runnable {
@@ -44,8 +46,9 @@ public class Battleship_server_clientThread implements Runnable {
 
     /**
      * The constructor.
+     *
      * @param client
-     * @param player 
+     * @param player
      */
     Battleship_server_clientThread(Socket client, int player) {
         this.client = client; //client socket
@@ -96,7 +99,7 @@ public class Battleship_server_clientThread implements Runnable {
                     synchronized (lock) { //increments the counter which keeps track of number of missiles fired
                         TRIES1.addAndGet(1);
                     }
-                    y = ((int) (target.charAt(1))) - 1;  //stores the y-axis value of the target coordinate
+                    y = ((int) (target.charAt(1)));  //stores the y-axis value of the target coordinate
                     x = getIt.getX(target); //determines and then stores the x-axis value of the coordinate
                     for (int loop = 0; loop < xy1.length; loop++) { //checks if the player's target corresponds with any of the opponents battleship's locations
                         if (target.equals(xy2[loop])) { //if yes then mark that spot with an 'X' to indicate a hit
@@ -137,8 +140,10 @@ public class Battleship_server_clientThread implements Runnable {
                     }
                     synchronized (lock) { //sets this thread's status to ready
                         lock.notify();
+                        System.out.println("notify works");
                         try {
                             lock.wait();
+                            System.out.println("woke up from sleep");
                         } catch (InterruptedException ex) {
                             Logger.getLogger(Battleship_server_clientThread.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -147,19 +152,19 @@ public class Battleship_server_clientThread implements Runnable {
                     //checks if the game is over
                     if (player1 == 17 && player2 == 17) { //in the case of a draw:
                         out.writeUTF("1");
-                        out.writeUTF("GAME OVER!");
+                        //out.writeUTF("GAME OVER!");
                         out.writeUTF("It was a draw! Both you and your opponent destroyed each other's battleships in " + TRIES1 + " shots.");
                         out.flush();
                         break;
                     } else if (player1 == 17) { //in the case of a win:
                         out.writeUTF("1");
-                        out.writeUTF("GAME OVER!");
+                        //out.writeUTF("GAME OVER!");
                         out.writeUTF("You won in " + TRIES1 + " shots.");
                         out.flush();
                         break;
                     } else if (player2 == 17) { //in the case of a loss:
                         out.writeUTF("1");
-                        out.writeUTF("GAME OVER!");
+                        //out.writeUTF("GAME OVER!");
                         out.writeUTF("You lost in " + TRIES2 + " shots.");
                         out.flush();
                         break;
@@ -197,7 +202,7 @@ public class Battleship_server_clientThread implements Runnable {
                     lock.notify();
                     //System.out.println("notify works");
                     try {
-                        lock.wait(); 
+                        lock.wait();
                         //System.out.println("woke up from sleep");
                     } catch (InterruptedException ex) {
                         Logger.getLogger(Battleship_server_clientThread.class.getName()).log(Level.SEVERE, null, ex);
@@ -212,28 +217,8 @@ public class Battleship_server_clientThread implements Runnable {
                     synchronized (lock) { //increments the counter which keeps track of number of missiles fired
                         TRIES2.addAndGet(1);
                     }
-                    y = ((int) (target.charAt(1))) - 1; //stores the y-axis value of the target coordinate
-                    if (target.charAt(0) == 'A') { //determines and then stores the x-axis value of the coordinate
-                        x = A;
-                    } else if (target.charAt(0) == 'B') {
-                        x = B;
-                    } else if (target.charAt(0) == 'C') {
-                        x = C;
-                    } else if (target.charAt(0) == 'D') {
-                        x = D;
-                    } else if (target.charAt(0) == 'E') {
-                        x = E;
-                    } else if (target.charAt(0) == 'F') {
-                        x = F;
-                    } else if (target.charAt(0) == 'G') {
-                        x = G;
-                    } else if (target.charAt(0) == 'H') {
-                        x = H;
-                    } else if (target.charAt(0) == 'I') {
-                        x = I;
-                    } else if (target.charAt(0) == 'J') {
-                        x = J;
-                    }
+                    y = ((int) (target.charAt(1))); //stores the y-axis value of the target coordinate
+                    x = getIt.getX(target); //determines and then stores the x-axis value of the coordinate
                     for (int loop = 0; loop < xy2.length; loop++) { //checks if the target coordinate corresponds with any of the opponents battleship coordinates
                         if (target.equals(xy2[loop])) { //if it does then set that coordinate to 'X' to indicate a hit
                             for (int row = 0; row <= 10; row++) {
@@ -270,8 +255,10 @@ public class Battleship_server_clientThread implements Runnable {
                     }
                     synchronized (lock) { //sets this thread's status to ready
                         lock.notify();
+                        System.out.println("notify works");
                         try {
                             lock.wait();
+                            System.out.println("woke up from sleep");
                         } catch (InterruptedException ex) {
                             Logger.getLogger(Battleship_server_clientThread.class.getName()).log(Level.SEVERE, null, ex);
                         }
