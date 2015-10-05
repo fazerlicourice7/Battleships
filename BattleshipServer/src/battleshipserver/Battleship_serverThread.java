@@ -33,6 +33,7 @@ public class Battleship_serverThread extends Thread {
     public Socket client2;
     public int PORT = 54321;
     static final Object lock = new Object(); //object that is used as the intrisic lock for the synchronized statements
+    static final Object readyLock = new Object(); //intrinsic lock for the two client threads. This lock is used only for the notify(), wait(), and notifyAll() methods
     static volatile String[] xy1, xy2;
 
     /**

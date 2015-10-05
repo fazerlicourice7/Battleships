@@ -128,7 +128,7 @@ public class Battleship_client {
 
                 coordinates1 = (String[][]) in.readObject(); //reads the two grids
                 coordinates2 = (String[][]) in.readObject();
-              
+
                 printDem.grid1(coordinates1); //prints the two grids
                 printDem.grid2(coordinates2);
 
@@ -137,8 +137,6 @@ public class Battleship_client {
                     target = READ.readLine();
 
                     int x = Character.getNumericValue((target.charAt(1)));
-                    System.out.println(x);
-                    System.out.println(numbers.contains(x));
                     if (letters.contains(target.toUpperCase().charAt(0)) && numbers.contains(x)) {
                         break;
                     }
@@ -151,7 +149,7 @@ public class Battleship_client {
                 //checks if the someone has won yet
                 String GameOver;
                 GameOver = in.readUTF();
-               System.out.println("read game over");
+                System.out.println("read game over");
                 if (GameOver.equals("1")) {
                     System.out.println("Game Over!!");
                     System.out.println(in.readUTF());
@@ -227,8 +225,6 @@ public class Battleship_client {
                          System.out.println(letters.contains(target.toUpperCase().charAt(0)));*/
 
                         int x = Character.getNumericValue(target.charAt(1));
-                        System.out.println(x);
-                        System.out.println(numbers.contains(x));
                         if (letters.contains(target.toUpperCase().charAt(0)) && numbers.contains(x)) {
                             break;
                         }

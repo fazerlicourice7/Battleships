@@ -33,7 +33,7 @@ public class getInput {
      * obtained
      * @return
      */
-    public int getX(String target) {
+    public int getTargetX(String target) {
 
         if (target.charAt(0) == 'A') {
             x = A;
