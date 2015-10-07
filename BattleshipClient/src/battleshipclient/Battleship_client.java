@@ -144,7 +144,7 @@ public class Battleship_client {
                 }
 
                 out.writeUTF(target);  //after validating, writes the target location to the server
-
+                System.out.println("writes target");
                 //server checks if it's a hit or a miss and updates the grid
                 //checks if the someone has won yet
                 String GameOver;
@@ -231,7 +231,7 @@ public class Battleship_client {
                         System.out.println("Error! \nPlease re-try.");
                     }
                     out.writeUTF(target); //after validating, writes the target location to the server
-
+                    System.out.println("writes target");
                     //server checks if it's a hit or a miss and updates the grid
                     //checks if the someone has won yet
                     String GameOver;

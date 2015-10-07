@@ -19,6 +19,7 @@ package battleshipserver;
 import java.io.*;
 import java.net.Socket;
 import java.net.ServerSocket;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,10 +33,13 @@ public class Battleship_serverThread extends Thread {
     public final Socket client1;
     public Socket client2;
     public int PORT = 54321;
+    
     static final Object lock = new Object(); //object that is used as the intrisic lock for the synchronized statements
     static final Object readyLock = new Object(); //intrinsic lock for the two client threads. This lock is used only for the notify(), wait(), and notifyAll() methods
     static volatile String[] xy1, xy2;
-
+    static boolean READY1 = false, READY2 = false;
+    static CountDownLatch shipsSet = new CountDownLatch(2), shotFired;
+    
     /**
      * Constructor
      * @param client1 

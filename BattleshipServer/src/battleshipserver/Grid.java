@@ -23,7 +23,7 @@ package battleshipserver;
 public class Grid {
 
     String[][] coordinates = new String[10][10];
-    
+
     /**
      * Initializes the 2 dimensional array with blanks (~).
      *
@@ -40,4 +40,25 @@ public class Grid {
         return coordinates;
     }
 
+    /**
+     * Sets the value of the (row,column) location equal to an 'X' to indicate a hit.
+     * @param row
+     * @param column
+     * @return 
+     */
+    public synchronized String[][] hit(int row, int column) {
+        coordinates[row][column] = "X ";
+        return coordinates;
+    }
+
+    /**
+     * Sets the value of the (row,column) location equal to a 'O' to indicate a miss.
+     * @param row
+     * @param column
+     * @return 
+     */
+    public synchronized String[][] miss(int row, int column) {
+        coordinates[row][column] = "O ";
+        return coordinates;
+    }
 }
