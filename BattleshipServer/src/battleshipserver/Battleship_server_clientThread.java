@@ -22,6 +22,10 @@ import static battleshipserver.Battleship_serverThread.lock;
 import static battleshipserver.Battleship_serverThread.readyLock;
 import static battleshipserver.Battleship_serverThread.xy1;
 import static battleshipserver.Battleship_serverThread.xy2;
+import static battleshipserver.Battleship_serverThread.READY1;
+import static battleshipserver.Battleship_serverThread.READY2;
+import static battleshipserver.Battleship_serverThread.shipsSet;
+import static battleshipserver.Battleship_serverThread.shotFired;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
@@ -43,7 +47,7 @@ public class Battleship_server_clientThread implements Runnable {
     int player1m, player2m; //player1m and player2m hold the number of misses made by that player
     int A = 0, B = 1, C = 2, D = 3, E = 4, F = 5, G = 6, H = 7, I = 8, J = 9; //hold the corresponding values of the x axis on the grid
     int x, y;//used to hold the values of the x and y axes of the users input while targeting the opponents battleships
-    private volatile String[][] coordinates1 = new String[10][10], coordinates2 = new String[10][10]; //hold the grids for both the players- coordinates1 holds player1's battleships- ie. player1 is aiming at coordinates2
+    private volatile String[][] coordinates1, coordinates2; //hold the grids for both the players- coordinates1 holds player1's battleships- ie. player1 is aiming at coordinates2
     Socket client; //is the socket connection to the player
 
     //instance variables
@@ -58,6 +62,8 @@ public class Battleship_server_clientThread implements Runnable {
      * @param player
      */
     Battleship_server_clientThread(Socket client, int player) {
+        this.coordinates2 = new String[10][10];
+        this.coordinates1 = new String[10][10];
         this.client = client; //client socket
         this.player = player; //variable that decides which player this thread deals with
     }
@@ -79,103 +85,45 @@ public class Battleship_server_clientThread implements Runnable {
                 out.writeObject(coordinates2);//writes the two 10x10 grids to the client
                 out.writeObject(coordinates1);
                 out.flush();
-                synchronized (Battleship_serverThread.lock) { //reads the location of all of the player's battleships, makes them available to the corresponding thread and stores them
-                    //System.out.println("synchronized lock works");
+                synchronized (lock) { //reads the location of all of the player's battleships, makes them available to the corresponding thread and stores them
                     xy1 = (String[]) in.readObject();
                 }
-                /*synchronized (readyLock) { //sets this thread's status to ready
-                 Battleship_serverThread.READY1 = true;
-                 readyLock.notifyAll();
-                 System.out.println("notify works");
-                 try {
-                 while (!Battleship_serverThread.READY2) {
-                 readyLock.wait();
-                 }
-                 System.out.println("woke up from sleep");
-                 } catch (InterruptedException ex) {
-                 Logger.getLogger(Battleship_server_clientThread.class.getName()).log(Level.SEVERE, null, ex);
-                 }
-                 readyLock.notifyAll();
-                 } */
-                Battleship_serverThread.shipsSet.countDown();
+                shipsSet.countDown();
                 try {
-                    Battleship_serverThread.shipsSet.await();
+                    shipsSet.await();
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Battleship_server_clientThread.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 while (true) {//game loop
-                    Battleship_serverThread.shotFired = new CountDownLatch(2);
-                    //System.out.println("started game loop");
+                    System.out.println("started game loop");
+                    shotFired = new CountDownLatch(2);
                     out.writeObject(coordinates2); //writes the updated grids once each iteration
                     out.writeObject(coordinates1);
                     out.flush();
-                    String target = in.readUTF(); //reads the target location from the client
-                    //Battleship_serverThread.READY1 = false;
+                    String target = new String();
+                    target = in.readUTF(); //reads the target location from the client
                     System.out.println("read target");
-                    synchronized (lock) { //increments the counter which keeps track of number of missiles fired
-                        System.out.println("incremented tries");
-                        TRIES1.addAndGet(1);
-                    }
+                    
+                    TRIES1.getAndIncrement();
+                    System.out.println("incremented tries");
+                    
                     y = ((int) (target.charAt(1)));  //stores the y-axis value of the target coordinate
                     x = getIt.getTargetX(target); //determines and then stores the x-axis value of the coordinate
+                    int row = y, column = x;
                     for (int loop = 0; loop < xy1.length; loop++) { //checks if the player's target corresponds with any of the opponents battleship's locations
                         if (target.equals(xy2[loop])) { //if yes then mark that spot with an 'X' to indicate a hit
-                            for (int row = 0; row <= 10; row++) {
-                                for (int column = 0; column <= 10; column++) {
-                                    if (column == x && row == y) {
-                                        synchronized (lock) {
-                                            System.out.println("edited grid");
-                                            coordinates2[row][column] = "X ";
-                                        }
-                                    } else if ("X ".equals(coordinates2[row][column]) || "O ".equals(coordinates2[row][column])) ; else {
-                                        synchronized (lock) {
-                                            System.out.println("edited grid");
-                                            coordinates2[row][column] = "~ ";
-                                        }
-                                    }
-                                }
-                            }
+                            grid2.hit(row, column);
                             player1++;  //keeps track of the number of hits the player made
                         } else { //if no then mark that spot with an 'O' to indicate a miss
-                            for (int row = 0; row <= 10; row++) {
-                                for (int column = 0; column <= 10; column++) {
-                                    if (column == x && row == y) {
-                                        synchronized (Battleship_serverThread.lock) {
-                                            System.out.println("edited grid");
-                                            coordinates2[row][column] = "O ";
-                                        }
-                                    } else if ("X ".equals(coordinates2[row][column]) || "O ".equals(coordinates2[row][column])) ; else {
-                                        synchronized (Battleship_serverThread.lock) {
-                                            System.out.println("edited grid");
-                                            coordinates2[row][column] = "~ ";
-                                        }
-                                    }
-                                }
-                            }
+                            grid2.miss(row, column);
                             player1m++; //keeps track of the number of misses that player made
                         }
                     }
-                    
-                    /*synchronized (readyLock) { //sets this thread's status to ready
-                     Battleship_serverThread.READY1 = true;
-                     readyLock.notifyAll();
-                     System.out.println("notify works");
-                     try {
-                     while (!Battleship_serverThread.READY2) {
-                     readyLock.wait();
-                     }
-                     System.out.println("woke up from sleep");
-                     } catch (InterruptedException ex) {
-                     Logger.getLogger(Battleship_server_clientThread.class.getName()).log(Level.SEVERE, null, ex);
-                     }
-                     readyLock.notifyAll();
-                     }
-                     Battleship_serverThread.READY1 = false; */
                     System.out.println("ready to set ready");
-                    Battleship_serverThread.shotFired.countDown();
+                    shotFired.countDown();
                     System.out.println("set ready");
                     try {
-                        Battleship_serverThread.shotFired.await();
+                        shotFired.await();
                     } catch (InterruptedException ex) {
                         Logger.getLogger(Battleship_server_clientThread.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -183,19 +131,16 @@ public class Battleship_server_clientThread implements Runnable {
                     //checks if the game is over
                     if (player1 == 17 && player2 == 17) { //in the case of a draw:
                         out.writeUTF("1");
-                        //out.writeUTF("GAME OVER!");
                         out.writeUTF("It was a draw! Both you and your opponent destroyed each other's battleships in " + TRIES1 + " shots.");
                         out.flush();
                         break;
                     } else if (player1 == 17) { //in the case of a win:
                         out.writeUTF("1");
-                        //out.writeUTF("GAME OVER!");
                         out.writeUTF("You won in " + TRIES1 + " shots.");
                         out.flush();
                         break;
                     } else if (player2 == 17) { //in the case of a loss:
                         out.writeUTF("1");
-                        //out.writeUTF("GAME OVER!");
                         out.writeUTF("You lost in " + TRIES2 + " shots.");
                         out.flush();
                         break;
@@ -226,104 +171,52 @@ public class Battleship_server_clientThread implements Runnable {
                 out.writeObject(coordinates2); //writes the two 10x10 grids to the client
                 out.writeObject(coordinates1);
                 synchronized (lock) { //reads the location of all of the player's battleships, makes them available to the corresponding thread and stores them
-                    //System.out.println("synchronized lock works");
                     xy2 = (String[]) in.readObject();
                 }
-               
-                /*synchronized (readyLock) { //sets this thread's status to ready
-                 Battleship_serverThread.READY2 = true;
-                 readyLock.notifyAll();
-                 System.out.println("notify works");
-                 try {
-                 while (!Battleship_serverThread.READY1) {
-                 readyLock.wait();
-                 }
-                 System.out.println("woke up from sleep");
-                 } catch (InterruptedException ex) {
-                 Logger.getLogger(Battleship_server_clientThread.class.getName()).log(Level.SEVERE, null, ex);
-                 }
-                 readyLock.notifyAll();
-                 }*/
-                Battleship_serverThread.shipsSet.countDown();
+                shipsSet.countDown();
                 try {
-                    Battleship_serverThread.shipsSet.await();
+                    shipsSet.await();
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Battleship_server_clientThread.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
                 while (true) { //game loop
-                    Battleship_serverThread.shotFired = new CountDownLatch(2);
-                    //System.out.println("started game loop");
+                    System.out.println("started game loop");
+                    shotFired = new CountDownLatch(2);
                     out.writeObject(coordinates1); //writes the updated grids once each iteration
                     out.writeObject(coordinates2);
-                    String target = in.readUTF();  //reads the target location from the client
-                    //Battleship_serverThread.READY2 = false;
+                    String target = new String();
+                    target = in.readUTF();  //reads the target location from the client
                     System.out.println("read target");
-                    synchronized (lock) { //increments the counter which keeps track of number of missiles fired
-                        System.out.println("incremented tries");
-                        TRIES2.addAndGet(1);
-                    }
+                    TRIES2.getAndIncrement();
+                    System.out.println("incremented tries");
                     y = ((int) (target.charAt(1))); //stores the y-axis value of the target coordinate
                     x = getIt.getTargetX(target); //determines and then stores the x-axis value of the coordinate
+                    int row = y;
+                    int column = x;
                     for (int loop = 0; loop < xy2.length; loop++) { //checks if the target coordinate corresponds with any of the opponents battleship coordinates
                         if (target.equals(xy2[loop])) { //if it does then set that coordinate to 'X' to indicate a hit
-                            for (int row = 0; row <= 10; row++) {
-                                for (int column = 0; column <= 10; column++) {
-                                    if (column == x && row == y) {
-                                        synchronized (lock) {
-                                            System.out.println("edited grid");
-                                            coordinates1[row][column] = "X ";
-                                        }
-                                    } else if ("X ".equals(coordinates1[row][column]) || "O ".equals(coordinates1[row][column])) {
-                                    } else {
-                                        synchronized (lock) {
-                                            System.out.println("edited grid");
-                                            coordinates1[row][column] = "~ ";
-                                        }
-                                    }
-                                }
-                            }
+                            grid1.hit(row, column);
+                            /*synchronized (lock) {
+                             System.out.println("edited grid");
+                             coordinates1[row][column] = "X ";
+                             }*/
+
                             player2++; //keeps track of the number of on target shots(ie-hits) fired
                         } else { // if it doesn't then mark a '0' to indicate a miss 
-                            for (int row = 0; row <= 10; row++) {
-                                for (int column = 0; column <= 10; column++) {
-                                    if (column == x && row == y) {
-                                        synchronized (lock) {
-                                            System.out.println("edited grid");
-                                            coordinates1[row][column] = "O ";
-                                        }
-                                    } else if ("X ".equals(coordinates1[row][column]) || "O ".equals(coordinates1[row][column])) ; else {
-                                        synchronized (lock) {
-                                            System.out.println("edited grid");
-                                            coordinates1[row][column] = "~ ";
-                                        }
-                                    }
-                                }
-                            }
+                            grid1.miss(row, column);
+                            /*synchronized (lock) {
+                             System.out.println("edited grid");
+                             coordinates1[row][column] = "O ";
+                             }*/
                             player2m++; //keeps track of the number of off target shots(ie-misses) fired
                         }
                     }
-                   
-                    /*synchronized (readyLock) { //sets this thread's status to ready
-                     Battleship_serverThread.READY2 = true;
-                     readyLock.notifyAll();
-                     System.out.println("notify works");
-                     try {
-                     while (!Battleship_serverThread.READY1) {
-                     readyLock.wait();
-                     }
-                     System.out.println("woke up from sleep");
-                     } catch (InterruptedException ex) {
-                     Logger.getLogger(Battleship_server_clientThread.class.getName()).log(Level.SEVERE, null, ex);
-                     }
-                     readyLock.notifyAll();
-                     }
-                     Battleship_serverThread.READY2 = false;*/
                     System.out.println("ready to set ready");
-                    Battleship_serverThread.shotFired.countDown();
+                    shotFired.countDown();
                     System.out.println("set ready");
                     try {
-                        Battleship_serverThread.shotFired.await();
+                        shotFired.await();
                     } catch (InterruptedException ex) {
                         Logger.getLogger(Battleship_server_clientThread.class.getName()).log(Level.SEVERE, null, ex);
                     }

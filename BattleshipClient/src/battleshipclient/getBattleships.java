@@ -50,7 +50,7 @@ public class getBattleships {
             System.out.println("Enter the location of your first battleship (length of 2)");
             input = READ.readLine();
             if (input.charAt(input.length() - 1) == ' ') { //if the first or last char is a space, remove it
-                input = input.substring(0, input.length() - 2);
+                input = input.substring(0, input.length() - 1);
             } else if (input.charAt(0) == ' ') {
                 input = input.substring(1);
             }
@@ -118,7 +118,7 @@ public class getBattleships {
             System.out.println("Enter the location of your " + number + " battleship (length of 3)");
             input = READ.readLine();
             if (input.charAt(input.length() - 1) == ' ') { //if the first or last char is a space, remove it
-                input = input.substring(0, input.length() - 2);
+                input = input.substring(0, input.length() - 1);
             } else if (input.charAt(0) == ' ') {
                 input = input.substring(1);
             }
@@ -188,7 +188,7 @@ public class getBattleships {
             System.out.println("Enter the location of your fourth battleship (length of 4)");
             input = READ.readLine();
             if (input.charAt(input.length() - 1) == ' ') { //if the first or last char is a space, remove it
-                input = input.substring(0, input.length() - 2);
+                input = input.substring(0, input.length() - 1);
             } else if (input.charAt(0) == ' ') {
                 input = input.substring(1);
             }
@@ -261,7 +261,7 @@ public class getBattleships {
             System.out.println("Enter the location of your fifth battleship (length of 5)");
             input = READ.readLine();
             if (input.charAt(input.length() - 1) == ' ') { //if the first or last char is a space, remove it
-                input = input.substring(0, input.length() - 2);
+                input = input.substring(0, input.length() - 1);
             } else if (input.charAt(0) == ' ') {
                 input = input.substring(1);
             }
