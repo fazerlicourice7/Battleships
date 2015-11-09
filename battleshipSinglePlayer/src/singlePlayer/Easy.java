@@ -16,21 +16,61 @@
  */
 package singlePlayer;
 
+import java.io.*;
+import java.util.Random;
+import static singlePlayer.SinglePlayer.coordinates;
+import static singlePlayer.SinglePlayer.locations;
+
 /**
  * @author fazer
  */
 public class Easy {
+
+    Random row, column;
+
     /**
      * Initialization Method
      */
-    public void init(){
-        
+    public void init() {
+        column = new Random();
+        row = new Random();
     }
-    
+
     /**
-     * 
+     *
      */
-    public void run(){
-        
+    public void run() {
+        while (true) {
+            String Guess = guess();
+            String coordinate[] = Guess.split(" ");
+            int x = Integer.parseInt(coordinate[0]);
+            int y = Integer.parseInt(coordinate[1]);
+            for (int i = 0; i < 17; i++) {
+                if (locations[i].equals(String.valueOf(x) + "," + String.valueOf(y))) {
+                    coordinates[x][y] = true;
+                }
+            }
+            try {
+                if (!coordinates[x][y]) {
+                    coordinates[x][y] = false;
+                }
+            } catch (NullPointerException ex) {
+                coordinates[x][y] = false;
+            }
+        }
+    }
+
+    public String guess() {
+        int x, y;
+        x = column.nextInt(10);
+        y = row.nextInt(10);
+        while (!coordinates[x][y]) {
+            x = column.nextInt(10);
+            y = row.nextInt(10);
+        }
+        coordinates[x][y] = false;
+        String X = String.valueOf(x);
+        String Y = String.valueOf(y);
+        return X + " " + Y;
     }
 }

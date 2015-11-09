@@ -27,13 +27,14 @@ import java.util.ArrayList;
 public class SinglePlayer {
 
     //variables
-    String[] locations;
+    static String[] locations;
 
     BufferedReader READ = new BufferedReader(new InputStreamReader(System.in));
 
     //static variables
     static ArrayList numbers;
     static ArrayList letters;
+    static boolean coordinates[][] = new boolean[10][10];
 
     //instance variables
     getBattleships GetBattleships = new getBattleships();
@@ -42,6 +43,12 @@ public class SinglePlayer {
     Hard HardMode = new Hard();
 
     public SinglePlayer() {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                coordinates[i][j] = true;
+            }
+        }
+
         for (int i = 0; i < 10; i++) {
             numbers.add(i);
         }
