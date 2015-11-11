@@ -67,7 +67,7 @@ public class SinglePlayer {
     }
 
     /**
-     *
+     * The initial interface between the user and the program
      */
     private void initialInterface() throws IOException {
 
@@ -76,47 +76,7 @@ public class SinglePlayer {
         String difficultyLevel = READ.readLine();
         difficultyLevel = difficultyLevel.toLowerCase();
 
-        //calls the method to get the location of the first battleship
-        String battleship1 = GetBattleships.battleship1();
-        String location[] = battleship1.split(" ");
-        locations[0] = location[0];
-        locations[1] = location[1];
-        location = null;
-
-        //calls the method to get the location of the second battleship
-        String battleship2 = GetBattleships.battleship23("second");
-        String location2[] = battleship2.split(" ");
-        locations[2] = location2[0];
-        locations[3] = location2[1];
-        locations[4] = location2[2];
-        location2 = null;
-
-        //calls the method to get the location of the third battleship
-        String battleship3 = GetBattleships.battleship23("third");
-        String location3[] = battleship3.split(" ");
-        locations[5] = location3[0];
-        locations[6] = location3[1];
-        locations[7] = location3[2];
-        location3 = null;
-
-        //calls the method to get the location of the fourth battleship
-        String battleship4 = GetBattleships.battleship4();
-        String location4[] = battleship4.split(" ");
-        locations[8] = location4[0];
-        locations[9] = location4[1];
-        locations[10] = location4[2];
-        locations[11] = location4[3];
-        location4 = null;
-
-        //calls the method to get the location of the fifth battleship
-        String battleship5 = GetBattleships.battleship5();
-        String location5[] = battleship5.split(" ");
-        locations[12] = location5[0];
-        locations[13] = location5[1];
-        locations[14] = location5[2];
-        locations[15] = location5[3];
-        locations[16] = location5[4];
-        location5 = null;
+        locations = GetBattleships.allBattleships();
 
         switch (difficultyLevel) {
             case "easy":
@@ -138,7 +98,8 @@ public class SinglePlayer {
      *
      * @param args
      */
-    public static void main(String args[]) {
-
+    public static void main(String args[]) throws IOException {
+        SinglePlayer obj = new SinglePlayer();
+        obj.initialInterface();
     }
 }

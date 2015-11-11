@@ -36,7 +36,59 @@ public class getBattleships {
     int y1, y2, y3, y4, y5;
     //used along with arraylist to locate the corresponding numbers and letters
     int index1, index2, index3, index4, index5;
+    String[] locations = new String[17];
 
+    /**
+     *  Calls all the getBattleship methods and returns the coordinates as a String array
+     * @return
+     * @throws IOException 
+     */
+    public String[] allBattleships() throws IOException{
+        //calls the method to get the location of the first battleship
+        String battleship1 = battleship1();
+        String location[] = battleship1.split(" ");
+        locations[0] = location[0];
+        locations[1] = location[1];
+        location = null;
+
+        //calls the method to get the location of the second battleship
+        String battleship2 = battleship23("second");
+        String location2[] = battleship2.split(" ");
+        locations[2] = location2[0];
+        locations[3] = location2[1];
+        locations[4] = location2[2];
+        location2 = null;
+
+        //calls the method to get the location of the third battleship
+        String battleship3 = battleship23("third");
+        String location3[] = battleship3.split(" ");
+        locations[5] = location3[0];
+        locations[6] = location3[1];
+        locations[7] = location3[2];
+        location3 = null;
+
+        //calls the method to get the location of the fourth battleship
+        String battleship4 = battleship4();
+        String location4[] = battleship4.split(" ");
+        locations[8] = location4[0];
+        locations[9] = location4[1];
+        locations[10] = location4[2];
+        locations[11] = location4[3];
+        location4 = null;
+
+        //calls the method to get the location of the fifth battleship
+        String battleship5 = battleship5();
+        String location5[] = battleship5.split(" ");
+        locations[12] = location5[0];
+        locations[13] = location5[1];
+        locations[14] = location5[2];
+        locations[15] = location5[3];
+        locations[16] = location5[4];
+        location5 = null;
+        
+        return locations;
+    }
+    
     /**
      * This method gets the location of the first battleship from the player.
      * First battleship has a length of two.

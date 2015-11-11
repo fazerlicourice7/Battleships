@@ -25,13 +25,20 @@ import static singlePlayer.SinglePlayer.locations;
  * @author fazer
  */
 public class Easy {
-
+    boolean[][] compCoordinates;
+    setBattleships setThem;
     Random row, column;
+    String[] compLocations;
+    GameOver check;
 
     /**
      * Initialization Method
      */
     public void init() {
+        compCoordinates = new boolean[10][10];
+        compLocations = new String[17];
+        check = new GameOver();
+        setThem = new setBattleships();
         column = new Random();
         row = new Random();
     }
@@ -40,6 +47,7 @@ public class Easy {
      *
      */
     public void run() {
+        compLocations = setThem.allBattlships();
         while (true) {
             String Guess = guess();
             String coordinate[] = Guess.split(" ");
@@ -57,6 +65,24 @@ public class Easy {
             } catch (NullPointerException ex) {
                 coordinates[x][y] = false;
             }
+            //===================USER INPUT==================
+            int inputX = 0, inputY = 0;
+            for (int i = 0; i < 17; i++) {
+                if (compLocations[i].equals(String.valueOf(inputX) + "," + String.valueOf(inputY))) {
+                    compCoordinates[x][y] = true;
+                }
+            }
+            try {
+                if (!compCoordinates[x][y]) {
+                    compCoordinates[x][y] = false;
+                }
+            } catch (NullPointerException ex) {
+                compCoordinates[x][y] = false;
+            }
+            //Do some user interaction, print out new coordinates
+            //check game over, who won?
+            boolean computer = check.isGameOver(coordinates);
+            boolean user = check.isGameOver(compCoordinates);
         }
     }
 
