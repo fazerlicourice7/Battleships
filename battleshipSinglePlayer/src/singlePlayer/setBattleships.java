@@ -16,7 +16,6 @@
  */
 package singlePlayer;
 
-import static singlePlayer.SinglePlayer.coordinates;
 import java.util.Random;
 
 /**
@@ -24,6 +23,7 @@ import java.util.Random;
  * @author 18balanagav
  */
 public class setBattleships {
+    //MAKE SURE THAT EACH COORDINATE IS OCCUPIED BY NO MORE THAN ONE SHIP 
 
     String[] compLocations;
     Random random = new Random();
