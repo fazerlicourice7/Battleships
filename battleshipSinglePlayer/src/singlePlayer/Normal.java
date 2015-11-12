@@ -17,42 +17,62 @@
 package singlePlayer;
 
 import java.util.ArrayList;
+import java.util.Random;
+import static singlePlayer.SinglePlayer.compCoordinates;
 
 /**
  * @author fazer
  */
 public class Normal {
-    ArrayList<String> targetList; 
+
+    Random random = new Random();
+    ArrayList<String> targetList;
+
     /**
      * Initialization method
      */
-    public void init(){
+    public void init() {
         targetList = new ArrayList<>();
-        
+
     }
-    
+
     /**
-     * 
+     *
      */
-    public void run(){
-        
+    public void run() {
+
     }
-    
+
     /**
      * Method that guesses the coordinates in the target list until it is empty.
      * This method only gets called if the targetList has a size > 0.
      */
-    public void target(){
-        
+    public void target() {
+
     }
-    
+
     /**
-     * Method that randomly-using the parity method- guesses locations to fire at
-     * 
-     * Parity Method: only guesses squares that are located at indices that are the same type(odd/even).
-     * Example: coordinates[0][4] coordinates[3][7]
+     * Method that randomly-using the parity method- guesses locations to fire
+     * at
+     *
+     * Parity Method: only guesses squares that are located at indices that are
+     * the same type(odd/even). Example: coordinates[0][4] coordinates[3][7]
      */
-    public void hunt(){
-        
+    public int[] hunt() {
+        int x, y;
+        int[] coordinates = new int[2];
+        x = random.nextInt(10);
+        y = random.nextInt(10);
+        while (!compCoordinates[x][y]) {
+            x = random.nextInt(10);
+            y = random.nextInt(10);
+            if(x%2==0&&y%2==0){ // something's wrong here
+                continue;
+            }
+        }
+        compCoordinates[x][y] = false;
+        coordinates[0] = x;
+        coordinates[1] = y;
+        return coordinates;
     }
 }

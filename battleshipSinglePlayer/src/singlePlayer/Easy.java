@@ -92,10 +92,13 @@ public class Easy {
             boolean user = check.isGameOver(displayCompCoordinates);
             if (computer && user) {
                 check.GameOver("tie",moves);
+                break;
             } else if (user) {
                 check.GameOver("user",moves);
+                break;
             } else if (computer) {
                 check.GameOver("comp",moves);
+                break;
             }
         }
     }
