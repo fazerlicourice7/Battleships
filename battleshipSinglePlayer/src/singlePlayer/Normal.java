@@ -16,14 +16,18 @@
  */
 package singlePlayer;
 
+import java.util.ArrayList;
+
 /**
  * @author fazer
  */
 public class Normal {
+    ArrayList<String> targetList; 
     /**
      * Initialization method
      */
     public void init(){
+        targetList = new ArrayList<>();
         
     }
     
@@ -31,6 +35,24 @@ public class Normal {
      * 
      */
     public void run(){
+        
+    }
+    
+    /**
+     * Method that guesses the coordinates in the target list until it is empty.
+     * This method only gets called if the targetList has a size > 0.
+     */
+    public void target(){
+        
+    }
+    
+    /**
+     * Method that randomly-using the parity method- guesses locations to fire at
+     * 
+     * Parity Method: only guesses squares that are located at indices that are the same type(odd/even).
+     * Example: coordinates[0][4] coordinates[3][7]
+     */
+    public void hunt(){
         
     }
 }

@@ -28,24 +28,31 @@ public class SinglePlayer {
 
     //variables
     static String[] locations;
+    static String[] compLocations;
 
     BufferedReader READ = new BufferedReader(new InputStreamReader(System.in));
 
     //static variables
     static ArrayList numbers;
     static ArrayList letters;
-    static boolean coordinates[][] = new boolean[10][10];
+    //grid that holds the grid that is displayed to the user
+    static boolean displayCoordinates[][] = new boolean[10][10];
+    //grid that holds the information about locations that have already been shot at.(Computer side)
+    static boolean[][] compCoordinates = new boolean[10][10];
+    //grid that holds the grid that is displayed to the user. (Computer Side)
+    static boolean displayCompCoordinates[][] = new boolean[10][10];
 
     //instance variables
     getBattleships GetBattleships = new getBattleships();
     Easy EasyMode = new Easy();
     Normal NormalMode = new Normal();
     Hard HardMode = new Hard();
+    setBattleships setThem = new setBattleships();
 
     public SinglePlayer() {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                coordinates[i][j] = true;
+                compCoordinates[i][j] = true;
             }
         }
 
@@ -64,6 +71,7 @@ public class SinglePlayer {
         letters.add("J");
 
         locations = new String[17];
+        compLocations = new String[17];
     }
 
     /**
@@ -77,6 +85,7 @@ public class SinglePlayer {
         difficultyLevel = difficultyLevel.toLowerCase();
 
         locations = GetBattleships.allBattleships();
+        compLocations = setThem.allBattlships();
 
         switch (difficultyLevel) {
             case "easy":

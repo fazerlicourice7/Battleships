@@ -18,71 +18,85 @@ package singlePlayer;
 
 import java.io.*;
 import java.util.Random;
-import static singlePlayer.SinglePlayer.coordinates;
+import static singlePlayer.SinglePlayer.compCoordinates;
+import static singlePlayer.SinglePlayer.displayCompCoordinates;
+import static singlePlayer.SinglePlayer.displayCoordinates;
 import static singlePlayer.SinglePlayer.locations;
+import static singlePlayer.SinglePlayer.compLocations;
 
 /**
  * @author fazer
  */
 public class Easy {
-    boolean[][] compCoordinates;
+
+    
     setBattleships setThem;
     Random row, column;
-    String[] compLocations;
+    
     GameOver check;
+    int moves;
 
     /**
      * Initialization Method
      */
     public void init() {
-        compCoordinates = new boolean[10][10];
-        compLocations = new String[17];
+       
+        
         check = new GameOver();
         setThem = new setBattleships();
         column = new Random();
         row = new Random();
+        moves = 0;
     }
 
     /**
      *
      */
     public void run() {
-        compLocations = setThem.allBattlships();
         while (true) {
+            moves++;
             String Guess = guess();
             String coordinate[] = Guess.split(" ");
             int x = Integer.parseInt(coordinate[0]);
             int y = Integer.parseInt(coordinate[1]);
             for (int i = 0; i < 17; i++) {
                 if (locations[i].equals(String.valueOf(x) + "," + String.valueOf(y))) {
-                    coordinates[x][y] = true;
+                    displayCoordinates[x][y] = true;
                 }
             }
             try {
-                if (!coordinates[x][y]) {
-                    coordinates[x][y] = false;
+                if (!displayCoordinates[x][y]) {
+                    displayCoordinates[x][y] = false;
                 }
             } catch (NullPointerException ex) {
-                coordinates[x][y] = false;
+                displayCoordinates[x][y] = false;
             }
+            
             //===================USER INPUT==================
             int inputX = 0, inputY = 0;
             for (int i = 0; i < 17; i++) {
                 if (compLocations[i].equals(String.valueOf(inputX) + "," + String.valueOf(inputY))) {
-                    compCoordinates[x][y] = true;
+                    displayCompCoordinates[x][y] = true;
                 }
             }
             try {
-                if (!compCoordinates[x][y]) {
-                    compCoordinates[x][y] = false;
+                if (!displayCompCoordinates[x][y]) {
+                    displayCompCoordinates[x][y] = false;
                 }
             } catch (NullPointerException ex) {
-                compCoordinates[x][y] = false;
+                displayCompCoordinates[x][y] = false;
             }
             //Do some user interaction, print out new coordinates
             //check game over, who won?
-            boolean computer = check.isGameOver(coordinates);
-            boolean user = check.isGameOver(compCoordinates);
+            boolean computer = check.isGameOver(displayCoordinates);
+            boolean user = check.isGameOver(displayCompCoordinates);
+            if (computer && user) {
+                check.GameOver("tie",moves);
+            } else if (user) {
+                check.GameOver("user",moves);
+            } else if (computer) {
+                check.GameOver("comp",moves);
+            }
         }
     }
 
@@ -90,11 +104,11 @@ public class Easy {
         int x, y;
         x = column.nextInt(10);
         y = row.nextInt(10);
-        while (!coordinates[x][y]) {
+        while (!compCoordinates[x][y]) {
             x = column.nextInt(10);
             y = row.nextInt(10);
         }
-        coordinates[x][y] = false;
+        compCoordinates[x][y] = false;
         String X = String.valueOf(x);
         String Y = String.valueOf(y);
         return X + " " + Y;

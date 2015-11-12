@@ -39,4 +39,12 @@ public class GameOver {
         }
         return numHits == 17;
     }
+    
+    /**
+     * Game over interface
+     * @param winner 
+     */
+    public void GameOver(String winner, int turns){
+        //** call new activity, whatever. Tell User who won and in how many turns
+    }
 }
