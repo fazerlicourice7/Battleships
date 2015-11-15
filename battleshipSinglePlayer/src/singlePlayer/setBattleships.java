@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 18balanagav
+ * Copyright (C) 2015 fazer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -99,8 +99,37 @@ public class setBattleships {
         int rowColumn = random.nextInt(10);
         //then choose locations
         int[] current = new int[5];
-        for (int i = 0; i < 5; i++) {
-            current[i] = random.nextInt(10);
+        current[0] = random.nextInt(6);
+        if (current[0] == 5) {
+            current[1] = 6;
+            current[2] = 7;
+            current[3] = 8;
+            current[4] = 9;
+        } else if (current[0] == 4) {
+            current[1] = 5;
+            current[2] = 6;
+            current[3] = 7;
+            current[4] = 8;
+        } else if (current[0] == 3) {
+            current[1] = 4;
+            current[2] = 5;
+            current[3] = 6;
+            current[4] = 7;
+        } else if (current[0] == 2) {
+            current[1] = 3;
+            current[2] = 4;
+            current[3] = 5;
+            current[4] = 6;
+        } else if (current[0] == 1) {
+            current[1] = 2;
+            current[2] = 3;
+            current[3] = 4;
+            current[4] = 5;
+        } else if (current[0] == 0) {
+            current[1] = 1;
+            current[2] = 2;
+            current[3] = 3;
+            current[4] = 4;
         }
         //create a string with all the values
         if (vertical) {
@@ -130,9 +159,36 @@ public class setBattleships {
         //then choose column / row
         int rowColumn = random.nextInt(10);
         //then choose locations
-        int[] current = new int[5];
-        for (int i = 0; i < 4; i++) {
-            current[i] = random.nextInt(10);
+        int[] current = new int[4];
+        current[0] = random.nextInt(7);
+        if (current[0] == 6) {
+            current[1] = 7;
+            current[2] = 8;
+            current[3] = 9;
+        } else if (current[0] == 5) {
+            current[1] = 6;
+            current[2] = 7;
+            current[3] = 8;
+        } else if (current[0] == 4) {
+            current[1] = 5;
+            current[2] = 6;
+            current[3] = 7;
+        } else if (current[0] == 3) {
+            current[1] = 4;
+            current[2] = 5;
+            current[3] = 6;
+        } else if (current[0] == 2) {
+            current[1] = 3;
+            current[2] = 4;
+            current[3] = 5;
+        } else if (current[0] == 1) {
+            current[1] = 2;
+            current[2] = 3;
+            current[3] = 4;
+        } else if (current[0] == 0) {
+            current[1] = 1;
+            current[2] = 2;
+            current[3] = 3;
         }
         //create a string with all the values
         if (vertical) {
@@ -162,10 +218,34 @@ public class setBattleships {
         //then choose column / row
         int rowColumn = random.nextInt(10);
         //then choose locations
-        int[] current = new int[5];
-        for (int i = 0; i < 3; i++) {
-            current[i] = random.nextInt(10);
+        int[] current = new int[3];
+        current[0] = random.nextInt(8);
+        if (current[0] == 0) {
+            current[1] = 1;
+            current[2] = 2;
+        } else if (current[0] == 1) {
+            current[1] = 2;
+            current[2] = 3;
+        } else if (current[0] == 2) {
+            current[1] = 3;
+            current[2] = 4;
+        } else if (current[0] == 3) {
+            current[1] = 4;
+            current[2] = 5;
+        } else if (current[0] == 4) {
+            current[1] = 5;
+            current[2] = 6;
+        } else if (current[0] == 5) {
+            current[1] = 6;
+            current[2] = 7;
+        } else if (current[0] == 6) {
+            current[1] = 7;
+            current[2] = 8;
+        } else if (current[0] == 7) {
+            current[1] = 8;
+            current[2] = 9;
         }
+
         //create a string with all the values
         if (vertical) {
             int column = rowColumn;
@@ -194,9 +274,26 @@ public class setBattleships {
         //then choose column / row
         int rowColumn = random.nextInt(10);
         //then choose locations
-        int[] current = new int[5];
-        for (int i = 0; i < 2; i++) {
-            current[i] = random.nextInt(10);
+        int[] current = new int[2];
+        current[0] = random.nextInt(9);
+        if (current[0] == 0) {
+            current[1] = 1;
+        } else if (current[0] == 1) {
+            current[1] = 2;
+        } else if (current[0] == 2) {
+            current[1] = 3;
+        } else if (current[0] == 3) {
+            current[1] = 4;
+        } else if (current[0] == 4) {
+            current[1] = 5;
+        } else if (current[0] == 5) {
+            current[1] = 6;
+        } else if (current[0] == 6) {
+            current[1] = 7;
+        } else if (current[0] == 7) {
+            current[1] = 8;
+        } else if (current[0] == 8) {
+            current[1] = 9;
         }
         //create a string with all the values
         if (vertical) {

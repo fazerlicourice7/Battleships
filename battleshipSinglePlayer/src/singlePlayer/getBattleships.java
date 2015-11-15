@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 fazerlicourice71256
+ * Copyright (C) 2015 fazer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

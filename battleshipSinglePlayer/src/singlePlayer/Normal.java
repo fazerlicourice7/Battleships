@@ -33,7 +33,6 @@ public class Normal {
      */
     public void init() {
         targetList = new ArrayList<>();
-
     }
 
     /**
@@ -66,7 +65,7 @@ public class Normal {
         while (!compCoordinates[x][y]) {
             x = random.nextInt(10);
             y = random.nextInt(10);
-            if(x%2==0&&y%2==0){ // something's wrong here
+            if (x % 2 == y % 2) { // something's wrong here - might be fixed
                 continue;
             }
         }
